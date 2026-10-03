@@ -706,6 +706,13 @@
             text-decoration: none;
             color: var(--text-main);
             transition: color var(--transition-speed);
+            min-width: 0;
+        }
+
+        .contact-item > div:last-child {
+            min-width: 0;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .contact-item:hover {
@@ -769,6 +776,63 @@
 
             .price-tag {
                 font-size: 2.5rem;
+            }
+
+            .contact-card {
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .contact-info-list {
+                gap: 1rem;
+            }
+
+            .contact-item {
+                font-size: 0.95rem;
+            }
+
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                flex-shrink: 0;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .car-specs-list {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-container {
+                gap: 1rem;
+            }
+
+            .pricing-card, .calculator-box {
+                padding: 1.5rem;
+            }
+
+            .terms-box {
+                padding: 1.5rem;
+            }
+
+            .forbidden-zones {
+                padding: 1.5rem;
+            }
+
+            .zones-list {
+                grid-template-columns: 1fr;
+            }
+
+            .equipment-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .equipment-card {
+                padding: 1rem;
             }
         }
 
