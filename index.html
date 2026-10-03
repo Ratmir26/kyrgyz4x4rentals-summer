@@ -163,10 +163,41 @@
             font-weight: 600;
             font-size: 0.85rem;
             transition: all var(--transition-speed);
+            white-space: nowrap;
+            min-height: 40px;
+            display: inline-flex;
+            align-items: center;
         }
 
         .lang-switch:hover {
             border-color: var(--accent);
+        }
+
+        .lang-switch .active {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .lang-switch .inactive {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .lang-switch .lang-sep {
+            color: var(--border-color);
+            margin: 0 0.35rem;
+        }
+
+        .contract-en-note {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 0.2rem 0.6rem;
+            white-space: nowrap;
         }
 
         .mobile-menu-btn {
@@ -819,6 +850,10 @@
                 padding: 1.5rem;
             }
 
+            .modal-content {
+                padding: 1.5rem;
+            }
+
             .forbidden-zones {
                 padding: 1.5rem;
             }
@@ -866,12 +901,12 @@
                 <li><a href="#pricing" data-lang="nav_prices">Цены</a></li>
                 <li><a href="#terms" data-lang="nav_terms">Условия</a></li>
                 <li><a href="#forbidden" data-lang="nav_forbidden">Запретные зоны</a></li>
-                <li><a href="javascript:void(0)" onclick="openContractModal()" data-lang="nav_contract">Договор</a></li>
+                <li><a href="javascript:void(0)" onclick="openContractModal()" data-lang="nav_contract">Договор</a> <span class="contract-en-note">EN only</span></li>
                 <li><a href="#contacts" data-lang="nav_contacts">Контакты</a></li>
             </ul>
 
             <div class="nav-controls">
-                <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">EN</button>
+                <button class="lang-switch" id="langBtn" onclick="toggleLanguage()" aria-pressed="true" aria-label="Текущий язык: русский"><span class="active">RU</span><span class="lang-sep"> | </span><span class="inactive">EN</span></button>
                 <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">
                     <i class="fa-solid fa-moon"></i>
                 </button>
@@ -1155,6 +1190,7 @@
         <div class="section-header">
             <h2 data-lang="terms_title">Условия аренды (Terms and Conditions)</h2>
             <p data-lang="terms_subtitle">Ознакомьтесь с правилами эксплуатации автомобилей и правилами возврата депозита.</p>
+            <p data-lang="terms_bilingual_note" style="color:var(--text-muted); font-size:0.9rem; margin-top:0.5rem;">Условия ниже двуязычные: при расхождении приоритет — английский текст договора.</p>
         </div>
 
         <div class="terms-box">
@@ -1266,7 +1302,7 @@
                         </div>
                     </a>
 
-                    <a href="https://wa.me/996558130031" target="_blank" class="contact-item">
+                    <a href="https://wa.me/996558130031" target="_blank" rel="noopener" class="contact-item">
                         <div class="contact-icon" style="background:rgba(16, 185, 129, 0.2); color:#10b981;"><i class="fa-brands fa-whatsapp"></i></div>
                         <div>
                             <div style="font-size:0.85rem; color:var(--text-muted);" data-lang="contact_whatsapp_label">WhatsApp:</div>
@@ -1274,7 +1310,7 @@
                         </div>
                     </a>
 
-                    <a href="https://t.me/+996558130031" target="_blank" class="contact-item">
+                    <a href="https://t.me/+996558130031" target="_blank" rel="noopener" class="contact-item">
                         <div class="contact-icon" style="background:rgba(14, 165, 233, 0.2); color:#0ea5e9;"><i class="fa-brands fa-telegram"></i></div>
                         <div>
                             <div style="font-size:0.85rem; color:var(--text-muted);" data-lang="contact_telegram_label">Telegram:</div>
@@ -1282,7 +1318,7 @@
                         </div>
                     </a>
 
-                    <a href="https://www.instagram.com/kyrgyz4x4rentals?stkn=eTNldm1xZHB6MXA%3D&utm_source=qr" target="_blank" class="contact-item">
+                    <a href="https://www.instagram.com/kyrgyz4x4rentals?stkn=eTNldm1xZHB6MXA%3D&utm_source=qr" target="_blank" rel="noopener" class="contact-item">
                         <div class="contact-icon" style="background:rgba(236, 72, 153, 0.2); color:#ec4899;"><i class="fa-brands fa-instagram"></i></div>
                         <div>
                             <div style="font-size:0.85rem; color:var(--text-muted);" data-lang="contact_instagram_label">Instagram:</div>
@@ -1296,10 +1332,10 @@
                 <h3 style="margin-bottom:1rem;" data-lang="contact_quick_header">Быстрая бронь</h3>
                 <p style="color:var(--text-muted); margin-bottom:1.5rem;" data-lang="contact_quick_desc">Нажмите кнопку ниже, чтобы написать напрямую в мессенджер Telegram или WhatsApp.</p>
                 <div style="display:flex; flex-direction:column; gap:1rem;">
-                    <a href="https://wa.me/996558130031" target="_blank" class="btn btn-primary" style="background:#10b981; justify-content:center;">
+                    <a href="https://wa.me/996558130031" target="_blank" rel="noopener" class="btn btn-primary" style="background:#10b981; justify-content:center;">
                         <i class="fa-brands fa-whatsapp"></i> <span data-lang="contact_whatsapp_btn">Написать в WhatsApp</span>
                     </a>
-                    <a href="https://t.me/+996558130031" target="_blank" class="btn btn-primary" style="background:#0ea5e9; justify-content:center;">
+                    <a href="https://t.me/+996558130031" target="_blank" rel="noopener" class="btn btn-primary" style="background:#0ea5e9; justify-content:center;">
                         <i class="fa-brands fa-telegram"></i> <span data-lang="contact_telegram_btn">Написать в Telegram</span>
                     </a>
                 </div>
@@ -1323,7 +1359,10 @@
     <div class="modal-overlay" id="contractModal">
         <div class="modal-body">
             <div class="modal-header">
-                <h3 class="brand-font">Vehicle Rental Agreement (Sample)</h3>
+                <div>
+                    <h3 class="brand-font">Vehicle Rental Agreement (Sample)</h3>
+                    <div style="color:var(--text-muted); font-size:0.85rem">English only — перевод условий носит информационный характер.</div>
+                </div>
                 <button class="btn-icon" onclick="closeContractModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-content">
@@ -1345,7 +1384,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeContractModal()">Close</button>
-                <a href="https://wa.me/996558130031" target="_blank" class="btn btn-primary">Agree to Terms</a>
+                <a href="https://wa.me/996558130031" target="_blank" rel="noopener" class="btn btn-primary">Agree to Terms</a>
             </div>
         </div>
     </div>
@@ -1412,6 +1451,7 @@
                 "calc_whatsapp_btn": "Забронировать в WhatsApp",
                 "terms_title": "Условия аренды (Terms and Conditions)",
                 "terms_subtitle": "Ознакомьтесь с правилами эксплуатации автомобилей и правилами возврата депозита.",
+                "terms_bilingual_note": "Условия ниже двуязычные: при расхождении приоритет — английский текст договора.",
                 "terms_general": "General / Общие условия",
                 "terms_g1": "The vehicle may not be transferred to a third party. (Транспортное средство не может быть передано третьим лицам).",
                 "terms_g2": "The vehicle must be returned clean. (Автомобиль должен быть возвращен в чистом виде).",
@@ -1523,6 +1563,7 @@
                 "calc_whatsapp_btn": "Book via WhatsApp",
                 "terms_title": "Terms and Conditions",
                 "terms_subtitle": "Please read the vehicle operation rules and deposit return policy.",
+                "terms_bilingual_note": "Terms below are bilingual: in case of discrepancy the English contract text prevails.",
                 "terms_general": "General Terms",
                 "terms_g1": "The vehicle may not be transferred to a third party.",
                 "terms_g2": "The vehicle must be returned clean.",
@@ -1592,7 +1633,11 @@
 
         function applyLanguage() {
             document.documentElement.lang = currentLang;
-            document.getElementById('langBtn').innerText = currentLang === 'ru' ? 'EN' : 'RU';
+            const langBtn = document.getElementById('langBtn');
+            const ruActive = currentLang === 'ru';
+            langBtn.innerHTML = '<span class="' + (ruActive ? 'active' : 'inactive') + '">RU</span><span class="lang-sep"> | </span><span class="' + (ruActive ? 'inactive' : 'active') + '">EN</span>';
+            langBtn.setAttribute('aria-pressed', ruActive ? 'true' : 'false');
+            langBtn.setAttribute('aria-label', ruActive ? 'Текущий язык: русский' : 'Текущий язык: английский');
 
             document.querySelectorAll('[data-lang]').forEach(element => {
                 const key = element.getAttribute('data-lang');
@@ -1667,7 +1712,7 @@
                 text = `Hello! I want to book an off-road vehicle at Kyrgyz4x4rentals:\n- Vehicle: ${data.car}\n- Days: ${data.days}\n- Travelers: ${data.travelers}\n- Total: ${data.total}€ (+800€ refundable deposit)`;
             }
             const message = encodeURIComponent(text);
-            window.open(`https://wa.me/996558130031?text=${message}`, '_blank');
+            const w = window.open(`https://wa.me/996558130031?text=${message}`, '_blank', 'noopener'); if (w) w.opener = null;
         }
 
         // Modal Control
