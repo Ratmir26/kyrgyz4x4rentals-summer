@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане</title>
+    <title data-lang="page_title">Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚙</text></svg>">
     <!-- Google Fonts & FontAwesome icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1313,7 +1313,7 @@
             <div class="brand-font" style="font-size:1.1rem; color:var(--text-main);">
                 Kyrgyz4x4rentals.com
             </div>
-            <div>
+            <div data-lang="footer_rights">
                 &copy; 2026 Kyrgyz4x4rentals. All rights reserved.
             </div>
         </div>
@@ -1371,7 +1371,6 @@
                 cars_subtitle: "Надежные японские внедорожники с объемом двигателя 4.7L, оснащенные автопалаткой на крыше и всем необходимым автономным оборудованием.",
                 spec_engine: "Объем: 4.7L",
                 spec_fuel: "Топливо: Бензин",
-                spec_year: "Год: ",
                 spec_tent: "Складная палатка",
                 btn_book: "Забронировать",
                 eq_title: "Всё включено в комплект авто",
@@ -1448,9 +1447,6 @@
                 contact_phone: "Телефон:",
                 contact_quick_header: "Быстрая бронь",
                 contact_quick_desc: "Нажмите кнопку ниже, чтобы написать напрямую в мессенджер Telegram или WhatsApp.",
-                modal_title: "Договор аренды автомобиля (Типовой образец)",
-                modal_close: "Закрыть",
-                modal_agree: "Согласовать условия",
                 forbidden_title: "Forbidden Roads / Запретные зоны",
                 contact_whatsapp_btn: "Написать в WhatsApp",
                 contact_telegram_btn: "Написать в Telegram",
@@ -1458,6 +1454,9 @@
                 contact_whatsapp_label: "WhatsApp:",
                 contact_telegram_label: "Telegram:",
                 contact_instagram_label: "Instagram:",
+                page_title: "Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане",
+                footer_rights: "© 2026 Kyrgyz4x4rentals. Все права защищены.",
+                theme_title: "Сменить тему",
                 spec_drive: "Полный привод (4WD)",
                 spec_transmission: "Автомат",
                 spec_color_1: "Цвет: Белый",
@@ -1483,7 +1482,6 @@
                 cars_subtitle: "Reliable Japanese 4.7L V8 4x4s equipped with rooftop tents and full off-grid gear.",
                 spec_engine: "Engine: 4.7L",
                 spec_fuel: "Fuel: Petrol",
-                spec_year: "Year: ",
                 spec_tent: "Rooftop Tent",
                 btn_book: "Book Now",
                 eq_title: "All Included Equipment",
@@ -1560,9 +1558,6 @@
                 contact_phone: "Phone:",
                 contact_quick_header: "Quick Booking",
                 contact_quick_desc: "Click below to contact us directly via Telegram or WhatsApp.",
-                modal_title: "Sample Car Rental Agreement",
-                modal_close: "Close",
-                modal_agree: "Agree Terms",
                 forbidden_title: "Forbidden Roads",
                 contact_whatsapp_btn: "Write to WhatsApp",
                 contact_telegram_btn: "Write to Telegram",
@@ -1570,6 +1565,9 @@
                 contact_whatsapp_label: "WhatsApp:",
                 contact_telegram_label: "Telegram:",
                 contact_instagram_label: "Instagram:",
+                page_title: "Kyrgyz4x4rentals.com — 4x4 Rental in Kyrgyzstan",
+                footer_rights: "© 2026 Kyrgyz4x4rentals. All rights reserved.",
+                theme_title: "Switch theme",
                 spec_drive: "Full Drive (4WD)",
                 spec_transmission: "Automatic",
                 spec_color_1: "Color: White",
@@ -1580,20 +1578,40 @@
             }
         };
 
+        // i18n core: the `translations` dictionary is the single source of truth.
+        // Every element with [data-lang] gets its content from translations[currentLang][key].
+        // The contract modal is intentionally English-only (owner's requirement) and has no data-lang keys.
         let currentLang = 'ru';
+        try {
+            const saved = localStorage.getItem('k4x4-lang');
+            if (saved === 'ru' || saved === 'en') currentLang = saved;
+        } catch (e) { /* private mode: keep default */ }
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+        function applyLanguage() {
             document.documentElement.lang = currentLang;
             document.getElementById('langBtn').innerText = currentLang === 'ru' ? 'EN' : 'RU';
-            
+
             document.querySelectorAll('[data-lang]').forEach(element => {
                 const key = element.getAttribute('data-lang');
-                if (translations[currentLang][key]) {
+                if (Object.prototype.hasOwnProperty.call(translations[currentLang], key)) {
                     element.innerHTML = translations[currentLang][key];
                 }
             });
+
+            const themeBtn = document.getElementById('themeBtn');
+            if (themeBtn && translations[currentLang].theme_title) {
+                themeBtn.title = translations[currentLang].theme_title;
+            }
         }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            try { localStorage.setItem('k4x4-lang', currentLang); } catch (e) {}
+            applyLanguage();
+        }
+
+        // Apply on load so the dictionary (not the HTML defaults) is what users see.
+        applyLanguage();
 
         // Theme Switcher (Dark / Light)
         function toggleTheme() {
