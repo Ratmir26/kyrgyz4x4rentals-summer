@@ -919,7 +919,7 @@
                         <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span data-lang="spec_engine">Объем: 4.7L</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
                         <div class="spec-item"><i class="fa-solid fa-truck-monster"></i> <span data-lang="spec_drive">Полный привод (4WD)</span></div>
-                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color">Цвет: Белый</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color_1">Цвет: Белый</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gear"></i> <span data-lang="spec_transmission">Автомат</span></div>
                         <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
                     </div>
@@ -939,7 +939,7 @@
                         <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
                         <div class="spec-item"><i class="fa-solid fa-truck-monster"></i> <span data-lang="spec_drive">Полный привод (4WD)</span></div>
-                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color">Цвет: Серый</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color_2">Цвет: Серый</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gear"></i> <span data-lang="spec_transmission">Автомат</span></div>
                         <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
                     </div>
@@ -959,7 +959,7 @@
                         <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
                         <div class="spec-item"><i class="fa-solid fa-truck-monster"></i> <span data-lang="spec_drive">Полный привод (4WD)</span></div>
-                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color">Цвет: Черный</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color_3">Цвет: Черный</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gear"></i> <span data-lang="spec_transmission">Автомат</span></div>
                     </div>
                     <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
@@ -978,7 +978,7 @@
                         <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
                         <div class="spec-item"><i class="fa-solid fa-truck-monster"></i> <span data-lang="spec_drive">Полный привод (4WD)</span></div>
-                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color">Цвет: Белый</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color_4">Цвет: Белый</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gear"></i> <span data-lang="spec_transmission">Автомат</span></div>
                     </div>
                     <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
@@ -997,7 +997,7 @@
                         <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
                         <div class="spec-item"><i class="fa-solid fa-truck-monster"></i> <span data-lang="spec_drive">Полный привод (4WD)</span></div>
-                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color">Цвет: Серый</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-palette"></i> <span data-lang="spec_color_5">Цвет: Серый</span></div>
                         <div class="spec-item"><i class="fa-solid fa-gear"></i> <span data-lang="spec_transmission">Автомат</span></div>
                     </div>
                     <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
@@ -1128,8 +1128,8 @@
                     <div class="form-group">
                         <label for="travelersInput" data-lang="calc_travelers">Количество путешественников:</label>
                         <select id="travelersInput" class="form-control" onchange="calculateTotal()">
-                            <option value="2">1 - 2 человека (150€/сутки)</option>
-                            <option value="3">3+ человека (200€/сутки + обычная палатка)</option>
+                            <option value="2" data-lang="calc_travelers_opt1">1 - 2 человека (150€/сутки)</option>
+                            <option value="3" data-lang="calc_travelers_opt2">3+ человека (200€/сутки + обычная палатка)</option>
                         </select>
                     </div>
 
@@ -1160,7 +1160,7 @@
                 <ul class="terms-ul">
                     <li data-lang="terms_g1">The vehicle may not be transferred to a third party. (Транспортное средство не может быть передано третьим лицам).</li>
                     <li data-lang="terms_g2">The vehicle must be returned clean. (Автомобиль должен быть возвращен в чистом виде).</li>
-                    <li data-lang="terms_g3">The client is responsible to safely operate the vehicle:
+                    <li><span data-lang="terms_g3">The client is responsible to safely operate the vehicle:</span>
                         <ul class="terms-nested-ul">
                             <li data-lang="terms_g3a">The client must ensure that the vehicle remains in roadworthy condition.</li>
                             <li data-lang="terms_g3b">Oil and Coolant must be checked regularly. (Масло и охлаждающая жидкость должны проверяться регулярно).</li>
@@ -1401,6 +1401,8 @@
                 calc_select_car: "Выберите внедорожник:",
                 calc_days: "Количество дней (мин. 5):",
                 calc_travelers: "Количество путешественников:",
+                calc_travelers_opt1: "1 - 2 человека (150€/сутки)",
+                calc_travelers_opt2: "3+ человека (200€/сутки + обычная палатка)",
                 calc_total_label: "Итоговая стоимость аренды:",
                 calc_deposit_hint: "+ 800€ возвратный залог при сдаче авто",
                 calc_whatsapp_btn: "Забронировать в WhatsApp",
@@ -1455,7 +1457,11 @@
                 contact_instagram_label: "Instagram:",
                 spec_drive: "Полный привод (4WD)",
                 spec_transmission: "Автомат",
-                spec_color: "Цвет",
+                spec_color_1: "Цвет: Белый",
+                spec_color_2: "Цвет: Серый",
+                spec_color_3: "Цвет: Черный",
+                spec_color_4: "Цвет: Белый",
+                spec_color_5: "Цвет: Серый",
             },
             en: {
                 nav_cars: "Vehicles",
@@ -1507,6 +1513,8 @@
                 calc_select_car: "Select Vehicle:",
                 calc_days: "Number of Days (min. 5):",
                 calc_travelers: "Number of Travelers:",
+                calc_travelers_opt1: "1 - 2 people (150€/day)",
+                calc_travelers_opt2: "3+ people (200€/day + ground tent)",
                 calc_total_label: "Total Rental Cost:",
                 calc_deposit_hint: "+ 800€ refundable security deposit on return",
                 calc_whatsapp_btn: "Book via WhatsApp",
@@ -1561,7 +1569,11 @@
                 contact_instagram_label: "Instagram:",
                 spec_drive: "Full Drive (4WD)",
                 spec_transmission: "Automatic",
-                spec_color: "Color",
+                spec_color_1: "Color: White",
+                spec_color_2: "Color: Gray",
+                spec_color_3: "Color: Black",
+                spec_color_4: "Color: White",
+                spec_color_5: "Color: Gray",
             }
         };
 
