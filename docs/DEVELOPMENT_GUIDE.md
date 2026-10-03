@@ -1,0 +1,47 @@
+# Руководство по разработке
+
+## Добавление нового автомобиля
+
+1. Скопируйте блок карточки в секции `#cars`
+2. Замените путь к изображению в `src="img/ваше-фото.jfif"`
+3. Обновите `alt`, `car-badge`, `car-title`
+4. При необходимости измените характеристики в `.car-specs-list`
+
+```html
+<div class="car-card">
+    <div class="car-image-container">
+        <span class="car-badge">Название</span>
+        <img class="car-photo" src="img/photo.jfif" alt="Название">
+    </div>
+    <div class="car-info">
+        <h3 class="car-title">Название</h3>
+        <div class="car-specs-list">
+            <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
+            <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span>Бензин</span></div>
+            <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span>2020</span></div>
+            <div class="spec-item"><i class="fa-solid fa-campground"></i> <span>Палатка</span></div>
+        </div>
+        <a href="#pricing" class="btn btn-primary">Забронировать</a>
+    </div>
+</div>
+```
+
+5. Добавьте автомобиль в `<select id="carSelect">` в калькуляторе
+
+## Замена фотографии
+
+Поместите файл в папку `img/` и обновите `src` у соответствующего `<img class="car-photo">`.
+
+**Важно:** Фото будет автоматически масштабироваться через `object-fit: cover`. Рекомендуемое соотношение сторон — как у контейнера (примерно 320×240px или шире).
+
+## Изменение текстов
+
+Все тексты на русском и английском находятся в объекте `translations` в конце файла. Элементы для локализации имеют атрибут `data-lang="ключ"`.
+
+## Изменение стилей
+
+CSS-переменные находятся в блоке `:root` (цвета, отступы, тени). Стили карточек — в блоке `.car-card`.
+
+## Переключение темы
+
+Добавьте в `<html>` атрибут `data-theme="light"` или `data-theme="dark"`. Кнопка в шапке переключает автоматически.

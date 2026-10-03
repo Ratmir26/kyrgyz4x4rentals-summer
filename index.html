@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане</title>
+    <!-- Google Fonts & FontAwesome icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-primary: #0a0f18;
+            --bg-secondary: #121927;
+            --bg-card: #1a2336;
+            --bg-card-hover: #222d44;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #ff6b00;
+            --accent-hover: #e05d00;
+            --accent-glow: rgba(255, 107, 0, 0.25);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(10, 15, 24, 0.85);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --modal-bg: #121824;
+            --danger: #ef4444;
+            --success: #10b981;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #ff6b00;
+            --accent-hover: #e05d00;
+            --accent-glow: rgba(255, 107, 0, 0.15);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(248, 250, 252, 0.85);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            --modal-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Typography Heading */
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        /* Header & Nav */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all var(--transition-speed);
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .logo i {
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-icon {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-icon:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .lang-switch {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all var(--transition-speed);
+        }
+
+        .lang-switch:hover {
+            border-color: var(--accent);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 1.5rem 4rem;
+            background: linear-gradient(180deg, rgba(10,15,24,0.4) 0%, var(--bg-primary) 100%),
+                        url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all var(--transition-speed);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Section Layouts */
+        section {
+            padding: 6rem 1.5rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cars Showcase Grid */
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .car-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .car-image-container {
+            position: relative;
+            height: 240px;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        .car-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .car-card:hover .car-photo {
+            transform: scale(1.03);
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(10, 15, 24, 0.75);
+            backdrop-filter: blur(8px);
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .car-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .car-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-specs-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1.25rem 0;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .spec-item i {
+            color: var(--accent);
+            width: 16px;
+        }
+
+        .spec-item span {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .equipment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all var(--transition-speed);
+        }
+
+        .equipment-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+        }
+
+        .equipment-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem;
+        }
+
+        .equipment-card h3 {
+            font-size: 1.05rem;
+        }
+
+        /* Dynamic Extra Equipment Banner */
+        .extra-equipment-notice {
+            margin-top: 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .extra-equipment-notice i {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* Pricing & Calculator Section */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .price-tag {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .calculator-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .calc-result {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .calc-total {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Forbidden Zones Section */
+        .forbidden-zones {
+            background: var(--bg-card);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .forbidden-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--danger);
+            margin-bottom: 1.5rem;
+        }
+
+        .zones-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-secondary);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+
+        .zone-item i {
+            color: var(--danger);
+        }
+
+        /* Terms Accordion */
+        .terms-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .terms-section {
+            margin-bottom: 2rem;
+        }
+
+        .terms-section h3 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .terms-ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .terms-ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .terms-ul li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        .terms-nested-ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .terms-nested-ul li::before {
+            content: "▪";
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Contract Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-speed);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-body {
+            background: var(--modal-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-content {
+            padding: 2rem;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: color var(--transition-speed);
+        }
+
+        .contact-item:hover {
+            color: var(--accent);
+        }
+
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-glow);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 1.5rem;
+            background: var(--bg-secondary);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Media Queries */
+        @media (max-width: 992px) {
+            .pricing-container, .contact-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--bg-card);
+                flex-direction: column;
+                padding: 2rem;
+                border-bottom: 1px solid var(--border-color);
+                clip-path: circle(0% at 100% 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+
+            .nav-links.active {
+                clip-path: circle(150% at 100% 0);
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .price-tag {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo brand-font">
+                <i class="fa-solid fa-truck-monster"></i>
+                <span>Kyrgyz4x4rentals</span>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#cars" data-lang="nav_cars">Машины</a></li>
+                <li><a href="#equipment" data-lang="nav_equip">Комплектующие</a></li>
+                <li><a href="#pricing" data-lang="nav_prices">Цены</a></li>
+                <li><a href="#terms" data-lang="nav_terms">Условия</a></li>
+                <li><a href="#forbidden" data-lang="nav_forbidden">Запретные зоны</a></li>
+                <li><a href="javascript:void(0)" onclick="openContractModal()" data-lang="nav_contract">Договор</a></li>
+                <li><a href="#contacts" data-lang="nav_contacts">Контакты</a></li>
+            </ul>
+
+            <div class="nav-controls">
+                <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">EN</button>
+                <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge" data-lang="hero_badge">Аренда подготовеленных экспедиционных 4x4</span>
+            <h1 data-lang="hero_title">Исследуйте Кыргызстан на подготовленных внедорожниках</h1>
+            <p data-lang="hero_subtitle">Аренда легендарных Toyota TLC 100, Lexus LX 470 и Lexus GX 470 со складными палаткам на крыше и полным туристическим снаряжением для экспедиций.</p>
+            <div class="hero-btns">
+                <a href="#pricing" class="btn btn-primary">
+                    <i class="fa-solid fa-calculator"></i> <span data-lang="hero_calc_btn">Рассчитать стоимость</span>
+                </a>
+                <a href="#cars" class="btn btn-secondary">
+                    <i class="fa-solid fa-car"></i> <span data-lang="hero_cars_btn">Выбрать авто</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicles Showcase Section -->
+    <section id="cars">
+        <div class="section-header">
+            <h2 data-lang="cars_title">Наш автопарк экспедиционных внедорожников</h2>
+            <p data-lang="cars_subtitle">Надежные японские внедорожники c объемом двигателя 4.7L, оснащенные автопалаткой на крыше и всем необходимым автономным оборудованием.</p>
+        </div>
+
+        <div class="cars-grid">
+            <!-- Car Card 1 -->
+            <div class="car-card">
+                <div class="car-image-container">
+                    <span class="car-badge">Toyota TLC 100</span>
+                    <img class="car-photo" src="img/lc100 n1.jfif" alt="Toyota Land Cruiser 100 #1">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">Toyota Land Cruiser 100 #1</h3>
+                    <div class="car-specs-list">
+                        <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span data-lang="spec_engine">Объем: 4.7L</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span data-lang="spec_year">Год: 2005</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
+                    </div>
+                    <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
+                </div>
+            </div>
+
+            <!-- Car Card 2 -->
+            <div class="car-card">
+                <div class="car-image-container">
+                    <span class="car-badge">Toyota TLC 100</span>
+                    <img class="car-photo" src="img/lc100 n2.jfif" alt="Toyota Land Cruiser 100 #2">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">Toyota Land Cruiser 100 #2</h3>
+                    <div class="car-specs-list">
+                        <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span data-lang="spec_year">Год: 2007</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
+                    </div>
+                    <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
+                </div>
+            </div>
+
+            <!-- Car Card 3 -->
+            <div class="car-card">
+                <div class="car-image-container">
+                    <span class="car-badge">Lexus LX 470</span>
+                    <img class="car-photo" src="img/lx470 n1.jfif" alt="Lexus LX 470 #1">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">Lexus LX 470 #1</h3>
+                    <div class="car-specs-list">
+                        <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span data-lang="spec_year">Год: 2004</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
+                    </div>
+                    <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
+                </div>
+            </div>
+
+            <!-- Car Card 4 -->
+            <div class="car-card">
+                <div class="car-image-container">
+                    <span class="car-badge">Lexus LX 470</span>
+                    <img class="car-photo" src="img/lx470 n2.jfif" alt="Lexus LX 470 #2">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">Lexus LX 470 #2</h3>
+                    <div class="car-specs-list">
+                        <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span data-lang="spec_year">Год: 2006</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
+                    </div>
+                    <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
+                </div>
+            </div>
+
+            <!-- Car Card 5: Lexus GX 470 -->
+            <div class="car-card">
+                <div class="car-image-container">
+                    <span class="car-badge">Lexus GX 470</span>
+                    <img class="car-photo" src="img/gx460.jfif" alt="Lexus GX 470">
+                </div>
+                <div class="car-info">
+                    <h3 class="car-title">Lexus GX 470</h3>
+                    <div class="car-specs-list">
+                        <div class="spec-item"><i class="fa-solid fa-gauge-high"></i> <span>4.7L</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-gas-pump"></i> <span data-lang="spec_fuel">Топливо: Бензин</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-calendar"></i> <span data-lang="spec_year">Год: 2004</span></div>
+                        <div class="spec-item"><i class="fa-solid fa-campground"></i> <span data-lang="spec_tent">Складная палатка</span></div>
+                    </div>
+                    <a href="#pricing" class="btn btn-primary" style="margin-top:auto; text-align:center; justify-content:center;" data-lang="btn_book">Забронировать</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Included Equipment Section -->
+    <section id="equipment" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="section-header">
+            <h2 data-lang="eq_title">Всё включено в комплект авто</h2>
+            <p data-lang="eq_subtitle">Каждая машина полностью укомплектована необходимым оборудованием для автономной жизни и безопасного путешествия в горах.</p>
+        </div>
+
+        <div class="equipment-grid">
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-campground"></i></div>
+                <h3 data-lang="eq_roof_tent">Палатка на крыше</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-snowflake"></i></div>
+                <h3 data-lang="eq_fridge">Автомобильный холодильник</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h3 data-lang="eq_dishes">Набор посуды</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-table"></i></div>
+                <h3 data-lang="eq_table">Кемпинговый стол</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-chair"></i></div>
+                <h3 data-lang="eq_chairs">Раскладные стулья</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-mattress-pillow"></i></div>
+                <h3 data-lang="eq_sleeping">Спальный мешок</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-fire-burner"></i></div>
+                <h3 data-lang="eq_gas">Газовое оборудование</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-fire"></i></div>
+                <h3 data-lang="eq_bbq">Барбекю / Мангал</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-lightbulb"></i></div>
+                <h3 data-lang="eq_lights">Кемпинговые светильники</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-dharmachakra"></i></div>
+                <h3 data-lang="eq_towing">Буксировочный трос</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h3 data-lang="eq_jumper">Провода прикуривателя</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-car-battery"></i></div>
+                <h3 data-lang="eq_booster">Пусковой бустер</h3>
+            </div>
+            <div class="equipment-card">
+                <div class="equipment-icon"><i class="fa-solid fa-gauge-simple-high"></i></div>
+                <h3 data-lang="eq_compressor">Компрессор для шин</h3>
+            </div>
+        </div>
+
+        <!-- Dynamic Rule Banner for >2 Travelers -->
+        <div class="extra-equipment-notice">
+            <i class="fa-solid fa-people-group"></i>
+            <div>
+                <h4 style="font-size:1.1rem; margin-bottom:0.25rem;" data-lang="eq_extra_title">Внимание к группе более 2-х человек:</h4>
+                <p data-lang="eq_extra_desc" style="color:var(--text-muted);">Если с вами путешествует более 2-х человек, в стандартный комплект бесплатно добавляется дополнительная обычная палатка!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing & Calculator Section -->
+    <section id="pricing">
+        <div class="section-header">
+            <h2 data-lang="price_title">Стоимость аренды и калькулятор</h2>
+            <p data-lang="price_subtitle">Прозрачные тарифы без скрытых платежей. Минимальный срок аренды составляет 5 дней.</p>
+        </div>
+
+        <div class="pricing-container">
+            <div class="pricing-card">
+                <h3 style="margin-bottom: 1.5rem;" data-lang="price_rates_head">Тарифные планы</h3>
+                
+                <div style="margin-bottom: 2rem;">
+                    <div class="price-tag">150€ <span>/ <span data-lang="price_per_day">сутки</span></span></div>
+                    <p style="color:var(--text-muted); margin-top:0.5rem;" data-lang="price_rate1">Для 2 путешественников (палатка на крыше + весь комплект equipment)</p>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <div class="price-tag">200€ <span>/ <span data-lang="price_per_day">сутки</span></span></div>
+                    <p style="color:var(--text-muted); margin-top:0.5rem;" data-lang="price_rate2">Если более 2-х путешественников (в комплект добавляется обычная палатка)</p>
+                </div>
+
+                <ul class="terms-ul">
+                    <li data-lang="price_min_days">Минимальный срок аренды: <b>5 дней</b></li>
+                    <li data-lang="price_deposit">Залог / Страховой франшиза (Deductible): <b>800€</b></li>
+                    <li data-lang="price_region_note">Прием/сдача авто в других регионах обговаривается индивидуально (свяжитесь с нами).</li>
+                </ul>
+            </div>
+
+            <div class="calculator-box">
+                <h3 style="margin-bottom: 1.5rem;" data-lang="calc_title">Быстрый калькулятор тура</h3>
+                <form id="bookingForm" onsubmit="calculateAndSendWhatsApp(event)">
+                    <div class="form-group">
+                        <label for="carSelect" data-lang="calc_select_car">Выберите внедорожник:</label>
+                        <select id="carSelect" class="form-control">
+                            <option value="Toyota Land Cruiser 100 #1">Toyota Land Cruiser 100 #1</option>
+                            <option value="Toyota Land Cruiser 100 #2">Toyota Land Cruiser 100 #2</option>
+                            <option value="Lexus LX 470 #1">Lexus LX 470 #1</option>
+                            <option value="Lexus LX 470 #2">Lexus LX 470 #2</option>
+                            <option value="Lexus GX 470">Lexus GX 470</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="daysInput" data-lang="calc_days">Количество дней (мин. 5):</label>
+                        <input type="number" id="daysInput" class="form-control" min="5" value="5" oninput="calculateTotal()">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="travelersInput" data-lang="calc_travelers">Количество путешественников:</label>
+                        <select id="travelersInput" class="form-control" onchange="calculateTotal()">
+                            <option value="2">1 - 2 человека (150€/сутки)</option>
+                            <option value="3">3+ человека (200€/сутки + обычная палатка)</option>
+                        </select>
+                    </div>
+
+                    <div class="calc-result">
+                        <div style="font-size:0.9rem; color:var(--text-muted);" data-lang="calc_total_label">Итоговая стоимость аренды:</div>
+                        <div class="calc-total" id="totalPriceDisplay">750 €</div>
+                        <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.3rem;" data-lang="calc_deposit_hint">+ 800€ возвратный залог при сдаче авто</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1.5rem; justify-content:center;">
+                        <i class="fa-brands fa-whatsapp"></i> <span data-lang="calc_whatsapp_btn">Забронировать в WhatsApp</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms & Conditions Section -->
+    <section id="terms">
+        <div class="section-header">
+            <h2 data-lang="terms_title">Условия аренды (Terms and Conditions)</h2>
+            <p data-lang="terms_subtitle">Ознакомьтесь с правилами эксплуатации автомобилей и правилами возврата депозита.</p>
+        </div>
+
+        <div class="terms-box">
+            <div class="terms-section">
+                <h3><i class="fa-solid fa-file-contract"></i> General / Общие условия</h3>
+                <ul class="terms-ul">
+                    <li>The vehicle may not be transferred to a third party. (Транспортное средство не может быть передано третьим лицам).</li>
+                    <li>The vehicle must be returned clean. (Автомобиль должен быть возвращен в чистом виде).</li>
+                    <li>The client is responsible to safely operate the vehicle:
+                        <ul class="terms-nested-ul">
+                            <li>The client must ensure that the vehicle remains in roadworthy condition.</li>
+                            <li>Oil and Coolant must be checked regularly. (Масло и охлаждающая жидкость должны проверяться регулярно).</li>
+                            <li>Tires and tire pressure should be observed regularly. (Шины и давление в шинах должны регулярно проверяться).</li>
+                            <li>“Kyrgyz4x4rentals” must be notified immediately if the vehicle has reached its service interval.</li>
+                            <li>Small repairs (up to 100 USD) of a non-critical nature may be performed by the client, but will not be reimbursed without prior agreement by “Kyrgyz4x4rentals”.</li>
+                            <li>Major repairs (over 100 USD) may only be performed with “Kyrgyz4x4rentals’” approval.</li>
+                        </ul>
+                    </li>
+                    <li>All road fines are the responsibility of the driver. (Все штрафы за нарушения ПДД лежат на ответственности водителя).</li>
+                    <li>Damage resulting from negligence (i.e. use of incorrect fuel, ignoring gauges/warning lights, unjustified off roading etc.) is not covered by insurance and will be charged to the driver/client.</li>
+                    <li>Ignoring the instructions of any “Kyrgyz4x4rentals” staff or representative will result in the forfeit of the security deposit.</li>
+                    <li>The client must keep the vehicle locked when not present with the vehicle.</li>
+                    <li>Breakdowns and problems as a result of the client’s negligence will be charged in full to the client, including any recovery fees incurred by “Kyrgyz4x4rentals”.</li>
+                    <li>The client is responsible to follow all laws and regulations of the country in which they are operating the vehicle. Any legal fees incurred by “Kyrgyz4x4rentals” as a result of the client’s actions will be charged to the client.</li>
+                    <li><b>Регионы приема/сдачи:</b> Прием и возврат машины в других регионах помимо Бишкека обсуждается индивидуально с клиентом при обращении по контактам.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h3><i class="fa-solid fa-triangle-exclamation"></i> Breakdowns / Поломки и Досрочный возврат</h3>
+                <ul class="terms-ul">
+                    <li><b>If the client wants to return the car during the trip for his own reason</b>, the company does not return the money for the remaining days, as the order of other orders will be violated. (При досрочном возврате по инициативе клиента оплата за оставшиеся дни не возвращается).</li>
+                    <li>Breakdowns are an unfortunate part of life in Central Asia. In the event that your vehicle breaks down, please inform “Kyrgyz4x4rentals” immediately.</li>
+                    <li>Inside Kyrgyzstan “Kyrgyz4x4rentals” or its representative will repair the vehicle or supply an alternative. If no alternative options suitable to the client can be arranged, then a refund of the unused days will be made.</li>
+                    <li>“Kyrgyz4x4rentals” is not obligated to refund lost time due to a breakdown and will do so only at its discretion.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h3><i class="fa-solid fa-shield-halved"></i> Insurance & Deposit Return / Страховка и Возврат депозита</h3>
+                <ul class="terms-ul">
+                    <li><b>Deductible (Депозит / Франшиза):</b> 800 euro.</li>
+                    <li><b>Условие возврата депозита:</b> Если при возврате машины не выявится нарушений ПДД, штрафов и повреждений кузова/интерьера, залог возвращается клиенту в полном объеме (800€) при завершении поездки! Если выявляются нарушения, царапины или штрафы — соответствующая сумма вычитается (минусуется) из депозита.</li>
+                    <li>“Kyrgyz4x4rentals” will not refund lost time due to an accident.</li>
+                </ul>
+            </div>
+
+            <div class="terms-section">
+                <h3><i class="fa-solid fa-receipt"></i> Standard Costs / Стандартные вычеты (примеры)</h3>
+                <ul class="terms-ul">
+                    <li>Lost Key (Потеря ключа): 20 € (без чипа); 100 € (с чипом)</li>
+                    <li>Unrepairable Tire Damage (Невосстановимое повреждение шины): 100 €</li>
+                    <li>Scratches to bumpers or light damage (Царапины и мелкие повреждения): Typically 200 - 300 €</li>
+                    <li>Dirty car (Грязный автомобиль при сдаче): 30 €</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Forbidden Zones Section -->
+    <section id="forbidden">
+        <div class="forbidden-zones">
+            <div class="forbidden-header">
+                <i class="fa-solid fa-ban fa-2x"></i>
+                <h2>Forbidden Roads / Запретные зоны</h2>
+            </div>
+            <p style="color:var(--text-muted);" data-lang="forbidden_desc">Внимание! В целях безопасности передвижение по следующим перевалам и дорогам строго запрещено. Нарушение данных ограничений приведет к полной потере депозита!</p>
+
+            <div class="zones-list">
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Uzongu Kush Valley</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Kok Airyk Pass</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Ton Pass</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Arabel Pass</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Altyn Arashan & Karakol gorge</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Chatyr Kol – Kel Suu road</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Kel Suu Lake (after yurt camp)</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Karkara Valley</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Sary Jazz Valley</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Kyzyl Oi – Toluk – Torkent</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Juuku pass</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Arslanbob</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Tosor Pass</div>
+                <div class="zone-item"><i class="fa-solid fa-triangle-exclamation"></i> Any extreme off-road roads</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacts">
+        <div class="contact-card">
+            <div>
+                <h2 style="font-size:2.2rem; margin-bottom:1rem;" data-lang="contact_title">Свяжитесь с нами</h2>
+                <p style="color:var(--text-muted);" data-lang="contact_subtitle">Мы всегда на связи в мессенджерах. Задайте любой вопрос по поводу бронирования внедорожников и туров!</p>
+
+                <div class="contact-info-list">
+                    <a href="tel:+996558130031" class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);" data-lang="contact_phone">Телефон:</div>
+                            <strong>+996 558 130 031</strong>
+                        </div>
+                    </a>
+
+                    <a href="mailto:kyrgyz4x4rentals@gmail.com" class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);">Email:</div>
+                            <strong>kyrgyz4x4rentals@gmail.com</strong>
+                        </div>
+                    </a>
+
+                    <a href="https://wa.me/996558130031" target="_blank" class="contact-item">
+                        <div class="contact-icon" style="background:rgba(16, 185, 129, 0.2); color:#10b981;"><i class="fa-brands fa-whatsapp"></i></div>
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);">WhatsApp:</div>
+                            <strong>+996 558 130 031</strong>
+                        </div>
+                    </a>
+
+                    <a href="https://t.me/+996558130031" target="_blank" class="contact-item">
+                        <div class="contact-icon" style="background:rgba(14, 165, 233, 0.2); color:#0ea5e9;"><i class="fa-brands fa-telegram"></i></div>
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);">Telegram:</div>
+                            <strong>https://t.me/+996558130031</strong>
+                        </div>
+                    </a>
+
+                    <a href="https://www.instagram.com/kyrgyz4x4rentals?stkn=eTNldm1xZHB6MXA%3D&utm_source=qr" target="_blank" class="contact-item">
+                        <div class="contact-icon" style="background:rgba(236, 72, 153, 0.2); color:#ec4899;"><i class="fa-brands fa-instagram"></i></div>
+                        <div>
+                            <div style="font-size:0.85rem; color:var(--text-muted);">Instagram:</div>
+                            <strong>@kyrgyz4x4rentals</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; justify-content:center; background:var(--bg-secondary); padding:2rem; border-radius:12px; border:1px solid var(--border-color);">
+                <h3 style="margin-bottom:1rem;" data-lang="contact_quick_header">Быстрая бронь</h3>
+                <p style="color:var(--text-muted); margin-bottom:1.5rem;" data-lang="contact_quick_desc">Нажмите кнопку ниже, чтобы написать напрямую в мессенджер Telegram или WhatsApp.</p>
+                <div style="display:flex; flex-direction:column; gap:1rem;">
+                    <a href="https://wa.me/996558130031" target="_blank" class="btn btn-primary" style="background:#10b981; justify-content:center;">
+                        <i class="fa-brands fa-whatsapp"></i> Написать в WhatsApp
+                    </a>
+                    <a href="https://t.me/+996558130031" target="_blank" class="btn btn-primary" style="background:#0ea5e9; justify-content:center;">
+                        <i class="fa-brands fa-telegram"></i> Написать в Telegram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div class="brand-font" style="font-size:1.1rem; color:var(--text-main);">
+                Kyrgyz4x4rentals.com
+            </div>
+            <div>
+                &copy; 2026 Kyrgyz4x4rentals. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sample Contract Modal Window -->
+    <div class="modal-overlay" id="contractModal">
+        <div class="modal-body">
+            <div class="modal-header">
+                <h3 class="brand-font" data-lang="modal_title">Договор аренды автомобиля (Типовой образец)</h3>
+                <button class="btn-icon" onclick="closeContractModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-content">
+                <h4>ДОГОВОР АРЕНДЫ ТРАНСПОРТНОГО СРЕДСТВА БЕЗ ЭКИПАЖА</h4>
+                <p><strong>Компания:</strong> Kyrgyz4x4rentals.com</p>
+                <p><strong>Телефон:</strong> +996 558 130 031 | Email: kyrgyz4x4rentals@gmail.com</p>
+                <hr style="margin:1rem 0; border-color:var(--border-color);">
+                
+                <h5>1. Предмет Договора</h5>
+                <p>1.1. Арендодатель предоставляет Арендатору во временное владение и пользование подготовленный внедорожник 4x4 (Toyota TLC 100 / Lexus LX 470 / Lexus GX 470) с комплектом экспедиционного оборудования.</p>
+                
+                <h5 style="margin-top:1rem;">2. Стоимость и Депозит</h5>
+                <p>2.1. Стоимость аренды рассчитывается по тарифу 150€/сутки (до 2 человек) или 200€/сутки (более 2 человек).</p>
+                <p>2.2. Страховой залог (депозит) составляет 800 EUR. Если при возврате ТС не выявлено нарушений ПДД, неоплаченных штрафов и повреждений кузова/снаряжения, депозит возвращается Арендатору в полном объеме. При наличии штрафов или повреждений суммы минусуются из депозита.</p>
+
+                <h5 style="margin-top:1rem;">3. Правила эксплуатации и Запретные зоны</h5>
+                <p>3.1. Запрещен выезд на следующие трассы и перевалы: Uzongu Kush Valley, Kok Airyk Pass, Ton Pass, Arabel Pass, Altyn Arashan, Chatyr Kol – Kel Suu road, Karkara Valley, Sary Jazz Valley, Kyzyl Oi – Toluk – Torkent, Juuku pass, Arslanbob, Tosor Pass.</p>
+                <p>3.2. Нарушение правил эксплуатации влечет за собой аннулирование депозита.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeContractModal()" data-lang="modal_close">Закрыть</button>
+                <a href="https://wa.me/996558130031" target="_blank" class="btn btn-primary" data-lang="modal_agree">Согласовать условия</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // Language Translations Object
+        const translations = {
+            ru: {
+                nav_cars: "Машины",
+                nav_equip: "Комплектующие",
+                nav_prices: "Цены",
+                nav_terms: "Условия",
+                nav_forbidden: "Запретные зоны",
+                nav_contract: "Договор",
+                nav_contacts: "Контакты",
+                hero_badge: "Аренда подготовленных экспедиционных 4x4",
+                hero_title: "Исследуйте Кыргызстан на подготовленных внедорожниках",
+                hero_subtitle: "Аренда легендарных Toyota TLC 100, Lexus LX 470 и Lexus GX 470 со складными палаткам на крыше и полным туристическим снаряжением для экспедиций.",
+                hero_calc_btn: "Рассчитать стоимость",
+                hero_cars_btn: "Выбрать авто",
+                cars_title: "Наш автопарк экспедиционных внедорожников",
+                cars_subtitle: "Надежные японские внедорожники c объемом двигателя 4.7L, оснащенные автопалаткой на крыше и всем необходимым автономным оборудованием.",
+                spec_engine: "Объем: 4.7L",
+                spec_fuel: "Топливо: Бензин",
+                spec_year: "Год: ",
+                spec_tent: "Складная палатка",
+                btn_book: "Забронировать",
+                eq_title: "Всё включено в комплект авто",
+                eq_subtitle: "Каждая машина полностью укомплектована необходимым оборудованием для автономной жизни и безопасного путешествия в горах.",
+                eq_roof_tent: "Палатка на крыше",
+                eq_fridge: "Холодильник",
+                eq_dishes: "Набор посуды",
+                eq_table: "Стол",
+                eq_chairs: "Стулья",
+                eq_sleeping: "Спальник",
+                eq_gas: "Газ",
+                eq_bbq: "Барбекю",
+                eq_lights: "Светильники",
+                eq_towing: "Трос",
+                eq_jumper: "Прикуриватель",
+                eq_booster: "Бустер",
+                eq_compressor: "Компрессор для шин",
+                eq_extra_title: "Внимание к группе более 2-х человек:",
+                eq_extra_desc: "Если с вами путешествует более 2-х человек, в стандартный комплект бесплатно добавляется дополнительная обычная палатка!",
+                price_title: "Стоимость аренды и калькулятор",
+                price_subtitle: "Прозрачные тарифы без скрытых платежей. Минимальный срок аренды составляет 5 дней.",
+                price_rates_head: "Тарифные планы",
+                price_per_day: "сутки",
+                price_rate1: "Для 2 путешественников (палатка на крыше + весь комплект)",
+                price_rate2: "Если более 2-х путешественников (добавляется обычная палатка)",
+                price_min_days: "Минимальный срок аренды: 5 дней",
+                price_deposit: "Залог / Страховой франшиза (Deductible): 800€",
+                price_region_note: "Прием/сдача авто в других регионах обговаривается индивидуально.",
+                calc_title: "Быстрый калькулятор тура",
+                calc_select_car: "Выберите внедорожник:",
+                calc_days: "Количество дней (мин. 5):",
+                calc_travelers: "Количество путешественников:",
+                calc_total_label: "Итоговая стоимость аренды:",
+                calc_deposit_hint: "+ 800€ возвратный залог при сдаче авто",
+                calc_whatsapp_btn: "Забронировать в WhatsApp",
+                terms_title: "Условия аренды (Terms and Conditions)",
+                terms_subtitle: "Ознакомьтесь с правилами эксплуатации автомобилей и правилами возврата депозита.",
+                forbidden_desc: "Внимание! В целях безопасности передвижение по следующим перевалам и дорогам строго запрещено. Нарушение данных ограничений приведет к полной потере депозита!",
+                contact_title: "Свяжитесь с нами",
+                contact_subtitle: "Мы всегда на связи в мессенджерах. Задайте любой вопрос по поводу бронирования внедорожников!",
+                contact_phone: "Телефон:",
+                contact_quick_header: "Быстрая бронь",
+                contact_quick_desc: "Нажмите кнопку ниже, чтобы написать напрямую в мессенджер Telegram или WhatsApp.",
+                modal_title: "Договор аренды автомобиля (Типовой образец)",
+                modal_close: "Закрыть",
+                modal_agree: "Согласовать условия"
+            },
+            en: {
+                nav_cars: "Vehicles",
+                nav_equip: "Equipment",
+                nav_prices: "Pricing",
+                nav_terms: "Terms",
+                nav_forbidden: "Forbidden Zones",
+                nav_contract: "Contract",
+                nav_contacts: "Contacts",
+                hero_badge: "Prepared Expedition 4x4 Rental",
+                hero_title: "Explore Kyrgyzstan on Prepared Off-Road Vehicles",
+                hero_subtitle: "Rent legendary Toyota TLC 100, Lexus LX 470, and Lexus GX 470 with rooftop tents and full camping gear.",
+                hero_calc_btn: "Calculate Price",
+                hero_cars_btn: "Choose Vehicle",
+                cars_title: "Our Expedition Fleet",
+                cars_subtitle: "Reliable Japanese 4.7L V8 4x4s equipped with rooftop tents and full off-grid gear.",
+                spec_engine: "Engine: 4.7L",
+                spec_fuel: "Fuel: Petrol",
+                spec_year: "Year: ",
+                spec_tent: "Rooftop Tent",
+                btn_book: "Book Now",
+                eq_title: "All Included Equipment",
+                eq_subtitle: "Every vehicle is fully equipped with camping gear for off-grid mountain adventures.",
+                eq_roof_tent: "Roof Tent",
+                eq_fridge: "Car Refrigerator",
+                eq_dishes: "Dishes Set",
+                eq_table: "Camping Table",
+                eq_chairs: "Chairs",
+                eq_sleeping: "Sleeping Bag",
+                eq_gas: "Gas Stove",
+                eq_bbq: "BBQ Grill",
+                eq_lights: "Lights",
+                eq_towing: "Tow Rope",
+                eq_jumper: "Jumper Cables",
+                eq_booster: "Jump Starter",
+                eq_compressor: "Tire Compressor",
+                eq_extra_title: "Group size note (>2 travelers):",
+                eq_extra_desc: "If more than 2 travelers are joining, an additional standard ground tent is included for free!",
+                price_title: "Rental Pricing & Calculator",
+                price_subtitle: "Transparent pricing without hidden fees. Minimum rental period is 5 days.",
+                price_rates_head: "Rate Plans",
+                price_per_day: "day",
+                price_rate1: "For 2 travelers (Rooftop tent + full equipment)",
+                price_rate2: "For >2 travelers (Additional ground tent included)",
+                price_min_days: "Minimum rental period: 5 days",
+                price_deposit: "Deductible / Security Deposit: 800€",
+                price_region_note: "Pick-up / Return in other regions is discussed individually.",
+                calc_title: "Quick Rental Calculator",
+                calc_select_car: "Select Vehicle:",
+                calc_days: "Number of Days (min. 5):",
+                calc_travelers: "Number of Travelers:",
+                calc_total_label: "Total Rental Cost:",
+                calc_deposit_hint: "+ 800€ refundable security deposit on return",
+                calc_whatsapp_btn: "Book via WhatsApp",
+                terms_title: "Terms and Conditions",
+                terms_subtitle: "Please read the vehicle operation rules and deposit return policy.",
+                forbidden_desc: "Warning! For safety reasons, driving on the following mountain passes and roads is strictly forbidden. Ignoring these restrictions may result in full loss of the security deposit!",
+                contact_title: "Contact Us",
+                contact_subtitle: "We are always online in messengers. Ask any questions about SUV booking and tours!",
+                contact_phone: "Phone:",
+                contact_quick_header: "Quick Booking",
+                contact_quick_desc: "Click below to contact us directly via Telegram or WhatsApp.",
+                modal_title: "Sample Car Rental Agreement",
+                modal_close: "Close",
+                modal_agree: "Agree Terms"
+            }
+        };
+
+        let currentLang = 'ru';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ru' ? 'en' : 'ru';
+            document.getElementById('langBtn').innerText = currentLang === 'ru' ? 'EN' : 'RU';
+            
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (translations[currentLang][key]) {
+                    element.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Theme Switcher (Dark / Light)
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            
+            const themeBtn = document.getElementById('themeBtn');
+            themeBtn.innerHTML = newTheme === 'dark' 
+                ? '<i class="fa-solid fa-moon"></i>' 
+                : '<i class="fa-solid fa-sun"></i>';
+        }
+
+        // Mobile Menu Navigation Toggle
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Price Calculator Function
+        function calculateTotal() {
+            const daysInput = document.getElementById('daysInput');
+            let days = parseInt(daysInput.value) || 5;
+            if (days < 5) days = 5;
+
+            const travelers = parseInt(document.getElementById('travelersInput').value);
+            const rate = travelers > 2 ? 200 : 150;
+            const total = days * rate;
+
+            document.getElementById('totalPriceDisplay').innerText = total + " €";
+            return { days, travelers, total, car: document.getElementById('carSelect').value };
+        }
+
+        // WhatsApp Direct Link Generator
+        function calculateAndSendWhatsApp(e) {
+            e.preventDefault();
+            const data = calculateTotal();
+            const message = `Здравствуйте! Хочу забронировать внедорожник в Kyrgyz4x4rentals:%0A` +
+                            `- Машина: ${encodeURIComponent(data.car)}%0A` +
+                            `- Дней: ${data.days}%0A` +
+                            `- Путешественников: ${data.travelers}%0A` +
+                            `- Итоговая сумма: ${data.total}€ (+800€ возвратный депозит)`;
+            window.open(`https://wa.me/996558130031?text=${message}`, '_blank');
+        }
+
+        // Modal Control
+        function openContractModal() {
+            document.getElementById('contractModal').classList.add('active');
+        }
+
+        function closeContractModal() {
+            document.getElementById('contractModal').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
