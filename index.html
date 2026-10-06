@@ -1750,6 +1750,11 @@
         // i18n core: the `translations` dictionary is the single source of truth.
         // Every element with [data-lang] gets its content from translations[currentLang][key].
         // The contract modal is intentionally English-only (owner's requirement) and has no data-lang keys.
+        // Supabase configuration (must precede applyLanguage: syncReviewsLanguage -> updateReviewsAuthState reads supabaseClient).
+        const SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
+        const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+        let supabaseClient = null;
+
         let currentLang = 'ru';
         try {
             const saved = localStorage.getItem('k4x4-lang');
@@ -1852,9 +1857,6 @@
         }
 
         // Reviews (Supabase): auth + moderated list + photo upload
-        const SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
-        const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
-        let supabaseClient = null;
         let reviewsAuthMode = 'login';
         let reviewRating = 0;
 
