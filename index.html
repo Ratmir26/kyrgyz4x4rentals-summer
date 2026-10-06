@@ -372,6 +372,9 @@
             transform: scale(1.03);
         }
 
+        .review-photo{width:100%;height:220px;object-fit:cover;border-radius:8px 8px 0 0;}
+        .review-stars button.selected{color:var(--accent);border-color:var(--accent);}
+
         .car-badge {
             position: absolute;
             top: 1rem;
@@ -901,6 +904,7 @@
                 <li><a href="#pricing" data-lang="nav_prices">Цены</a></li>
                 <li><a href="#terms" data-lang="nav_terms">Условия</a></li>
                 <li><a href="#forbidden" data-lang="nav_forbidden">Запретные зоны</a></li>
+                <li><a href="#reviews" data-lang="nav_reviews">Отзывы</a></li>
                 <li><a href="javascript:void(0)" onclick="openContractModal()" data-lang="nav_contract">Договор</a> <span class="contract-en-note">EN only</span></li>
                 <li><a href="#contacts" data-lang="nav_contacts">Контакты</a></li>
             </ul>
@@ -1160,7 +1164,7 @@
 
                     <div class="form-group">
                         <label for="daysInput" data-lang="calc_days">Количество дней (мин. 5):</label>
-                        <input type="number" id="daysInput" class="form-control" min="5" value="5" oninput="calculateTotal()">
+                        <input type="number" id="daysInput" class="form-control" min="5" value="5" oninput="calculateTotal()" onchange="clampDaysInput()" onblur="clampDaysInput()">
                     </div>
 
                     <div class="form-group">
@@ -1278,6 +1282,80 @@
         </div>
     </section>
 
+    <!-- Reviews Section -->
+    <section id="reviews">
+        <div class="section-header">
+            <h2 data-lang="reviews_title">Отзывы путешественников</h2>
+            <p data-lang="reviews_subtitle">Войдите и поделитесь впечатлениями о поездке. Отзывы публикуются после проверки.</p>
+        </div>
+
+        <div class="calculator-box" id="reviewsSoon" style="display:none; border-left:4px solid var(--accent);">
+            <p style="color:var(--text-muted);"><i class="fa-solid fa-comments"></i> <span data-lang="reviews_soon">Раздел отзывов скоро появится. Мы подключаем сервис отзывов.</span></p>
+        </div>
+
+        <div class="pricing-container" id="reviewsMain">
+            <div class="calculator-box">
+                <h3 style="margin-bottom:1.5rem;"><i class="fa-solid fa-user"></i> <span data-lang="reviews_login_btn">Войти</span> / <span data-lang="reviews_register_btn">Зарегистрироваться</span></h3>
+                <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+                    <button type="button" class="btn btn-secondary" id="authModeLoginBtn" onclick="setReviewsAuthMode('login')"><span data-lang="reviews_login_btn">Войти</span></button>
+                    <button type="button" class="btn btn-secondary" id="authModeRegisterBtn" onclick="setReviewsAuthMode('register')"><span data-lang="reviews_register_btn">Зарегистрироваться</span></button>
+                </div>
+                <div class="form-group" id="authNameGroup" style="display:none;">
+                    <label for="authName" data-lang="reviews_name">Имя:</label>
+                    <input type="text" id="authName" class="form-control" maxlength="80">
+                </div>
+                <div class="form-group">
+                    <label for="authEmail" data-lang="reviews_email">Email:</label>
+                    <input type="email" id="authEmail" class="form-control" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="authPassword" data-lang="reviews_password">Пароль:</label>
+                    <input type="password" id="authPassword" class="form-control" autocomplete="current-password">
+                </div>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    <button type="button" class="btn btn-primary" id="authLoginBtn" onclick="reviewsLogin()"><span data-lang="reviews_login_btn">Войти</span></button>
+                    <button type="button" class="btn btn-primary" id="authRegisterBtn" onclick="reviewsRegister()" style="display:none;"><span data-lang="reviews_register_btn">Зарегистрироваться</span></button>
+                    <button type="button" class="btn btn-secondary" id="authLogoutBtn" onclick="reviewsLogout()" style="display:none;"><span data-lang="reviews_logout_btn">Выйти</span></button>
+                </div>
+                <p id="reviewsLoggedAs" style="margin-top:1rem; color:var(--text-muted); font-size:0.9rem;"></p>
+                <p style="color:var(--text-muted); font-size:0.9rem;" data-lang="reviews_login_hint">Войдите или зарегистрируйтесь, чтобы оставить отзыв.</p>
+                <p id="reviewsAuthStatus" style="margin-top:0.5rem; font-size:0.9rem;"></p>
+            </div>
+
+            <div class="calculator-box">
+                <h3 style="margin-bottom:1.5rem;"><i class="fa-solid fa-star"></i> <span data-lang="reviews_submit_btn">Отправить отзыв</span></h3>
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <label data-lang="reviews_rating_label">Оценка:</label>
+                        <div id="reviewsStars" class="review-stars" style="display:flex; gap:0.5rem;">
+                            <button type="button" class="btn btn-secondary" data-rating="1" onclick="setReviewRating(1)" aria-label="1">★</button>
+                            <button type="button" class="btn btn-secondary" data-rating="2" onclick="setReviewRating(2)" aria-label="2">★</button>
+                            <button type="button" class="btn btn-secondary" data-rating="3" onclick="setReviewRating(3)" aria-label="3">★</button>
+                            <button type="button" class="btn btn-secondary" data-rating="4" onclick="setReviewRating(4)" aria-label="4">★</button>
+                            <button type="button" class="btn btn-secondary" data-rating="5" onclick="setReviewRating(5)" aria-label="5">★</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText" data-lang="reviews_text_label">Ваш отзыв:</label>
+                        <textarea id="reviewText" class="form-control" rows="4" maxlength="2000"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewPhoto" data-lang="reviews_photo_label">Фото (необязательно, до 5 МБ):</label>
+                        <input type="file" id="reviewPhoto" class="form-control" accept="image/*" onchange="previewReviewPhoto()">
+                        <img id="reviewPhotoPreview" alt="" style="display:none; max-width:100%; margin-top:0.75rem; border-radius:8px;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="reviewSubmitBtn" style="width:100%; justify-content:center;"><span data-lang="reviews_submit_btn">Отправить отзыв</span></button>
+                </form>
+                <p id="reviewsFormStatus" style="margin-top:0.75rem; font-size:0.9rem;"></p>
+            </div>
+        </div>
+
+        <div class="cars-grid" id="reviewsList" style="margin-top:2rem;"></div>
+        <div class="calculator-box" id="reviewsEmpty" style="margin-top:2rem; display:none;">
+            <p style="color:var(--text-muted);"><i class="fa-solid fa-comment"></i> <span data-lang="reviews_empty">Пока нет отзывов. Станьте первым!</span></p>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contacts">
         <div class="contact-card">
@@ -1389,6 +1467,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
     <!-- JavaScript Logic -->
     <script>
         // Language Translations Object
@@ -1505,7 +1584,30 @@
                 "spec_color_2": "Цвет: Серый",
                 "spec_color_3": "Цвет: Черный",
                 "spec_color_4": "Цвет: Белый",
-                "spec_color_5": "Цвет: Серый"
+                "spec_color_5": "Цвет: Серый",
+                "nav_reviews": "Отзывы",
+                "reviews_title": "Отзывы путешественников",
+                "reviews_subtitle": "Войдите и поделитесь впечатлениями о поездке. Отзывы публикуются после проверки.",
+                "reviews_email": "Email:",
+                "reviews_password": "Пароль:",
+                "reviews_name": "Имя:",
+                "reviews_login_btn": "Войти",
+                "reviews_register_btn": "Зарегистрироваться",
+                "reviews_logout_btn": "Выйти",
+                "reviews_logged_as_prefix": "Вы вошли как:",
+                "reviews_login_hint": "Войдите или зарегистрируйтесь, чтобы оставить отзыв.",
+                "reviews_text_label": "Ваш отзыв:",
+                "reviews_rating_label": "Оценка:",
+                "reviews_photo_label": "Фото (необязательно, до 5 МБ):",
+                "reviews_submit_btn": "Отправить отзыв",
+                "reviews_sending": "Отправка…",
+                "reviews_success": "Спасибо! Отзыв отправлен и появится после проверки.",
+                "reviews_empty": "Пока нет отзывов. Станьте первым!",
+                "reviews_soon": "Раздел отзывов скоро появится. Мы подключаем сервис отзывов.",
+                "reviews_auth_required": "Сначала войдите в аккаунт.",
+                "reviews_text_required": "Напишите текст отзыва.",
+                "reviews_rating_required": "Поставьте оценку от 1 до 5.",
+                "reviews_photo_invalid": "Фото должно быть изображением до 5 МБ."
         },
         "en": {
                 "nav_cars": "Vehicles",
@@ -1617,7 +1719,30 @@
                 "spec_color_2": "Color: Gray",
                 "spec_color_3": "Color: Black",
                 "spec_color_4": "Color: White",
-                "spec_color_5": "Color: Gray"
+                "spec_color_5": "Color: Gray",
+                "nav_reviews": "Reviews",
+                "reviews_title": "Traveler Reviews",
+                "reviews_subtitle": "Sign in and share your trip experience. Reviews are published after moderation.",
+                "reviews_email": "Email:",
+                "reviews_password": "Password:",
+                "reviews_name": "Name:",
+                "reviews_login_btn": "Sign in",
+                "reviews_register_btn": "Sign up",
+                "reviews_logout_btn": "Sign out",
+                "reviews_logged_as_prefix": "Signed in as:",
+                "reviews_login_hint": "Sign in or sign up to leave a review.",
+                "reviews_text_label": "Your review:",
+                "reviews_rating_label": "Rating:",
+                "reviews_photo_label": "Photo (optional, up to 5 MB):",
+                "reviews_submit_btn": "Submit review",
+                "reviews_sending": "Sending…",
+                "reviews_success": "Thank you! Your review was sent and will appear after moderation.",
+                "reviews_empty": "No reviews yet. Be the first!",
+                "reviews_soon": "The reviews section is coming soon. We are connecting the reviews service.",
+                "reviews_auth_required": "Please sign in first.",
+                "reviews_text_required": "Please write your review text.",
+                "reviews_rating_required": "Please set a rating from 1 to 5.",
+                "reviews_photo_invalid": "Photo must be an image up to 5 MB."
         }
 };
         /*__I18N_END__*/
@@ -1650,6 +1775,7 @@
             if (themeBtn && translations[currentLang].theme_title) {
                 themeBtn.title = translations[currentLang].theme_title;
             }
+            try { if (typeof syncReviewsLanguage === 'function') syncReviewsLanguage(); } catch (e) {}
         }
 
         function toggleLanguage() {
@@ -1687,11 +1813,20 @@
         });
 
         // Price Calculator Function
-        function calculateTotal() {
+        const MIN_RENTAL_DAYS = 5;
+        function getDaysForCalc() {
+            const raw = parseInt(document.getElementById('daysInput').value, 10);
+            if (isNaN(raw)) return MIN_RENTAL_DAYS;
+            return Math.max(raw, MIN_RENTAL_DAYS);
+        }
+        function clampDaysInput() {
             const daysInput = document.getElementById('daysInput');
-            let days = parseInt(daysInput.value) || 5;
-            if (days < 5) days = 5;
-            daysInput.value = days;
+            if (daysInput.value === '' || daysInput.value === null) return;
+            const parsed = parseInt(daysInput.value, 10);
+            if (isNaN(parsed) || parsed < MIN_RENTAL_DAYS) daysInput.value = MIN_RENTAL_DAYS;
+        }
+        function calculateTotal() {
+            const days = getDaysForCalc();
 
             const travelers = parseInt(document.getElementById('travelersInput').value);
             const rate = travelers > 2 ? 200 : 150;
@@ -1704,6 +1839,7 @@
         // WhatsApp Direct Link Generator
         function calculateAndSendWhatsApp(e) {
             e.preventDefault();
+            clampDaysInput();
             const data = calculateTotal();
             let text;
             if (currentLang === 'ru') {
@@ -1714,6 +1850,235 @@
             const message = encodeURIComponent(text);
             const w = window.open(`https://wa.me/996558130031?text=${message}`, '_blank', 'noopener'); if (w) w.opener = null;
         }
+
+        // Reviews (Supabase): auth + moderated list + photo upload
+        const SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
+        const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+        let supabaseClient = null;
+        let reviewsAuthMode = 'login';
+        let reviewRating = 0;
+
+        function reviewsConfigured() {
+            return SUPABASE_URL.indexOf('PASTE_') !== 0 && SUPABASE_ANON_KEY.indexOf('PASTE_') !== 0;
+        }
+        function t(key) {
+            if (translations[currentLang] && translations[currentLang][key]) return translations[currentLang][key];
+            return key;
+        }
+        function setReviewsStatus(elId, key, isError) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            el.innerText = key ? t(key) : '';
+            el.style.color = isError ? 'var(--danger)' : 'var(--success)';
+        }
+        function setReviewsAuthMode(mode) {
+            reviewsAuthMode = mode;
+            const isReg = mode === 'register';
+            document.getElementById('authNameGroup').style.display = isReg ? 'block' : 'none';
+            document.getElementById('authLoginBtn').style.display = isReg ? 'none' : 'inline-flex';
+            document.getElementById('authRegisterBtn').style.display = isReg ? 'inline-flex' : 'none';
+        }
+        function setReviewRating(n) {
+            reviewRating = n;
+            const btns = document.querySelectorAll('#reviewsStars button');
+            btns.forEach(function (b) {
+                const v = parseInt(b.getAttribute('data-rating'), 10);
+                b.classList.toggle('selected', v <= n);
+            });
+        }
+        function previewReviewPhoto() {
+            const input = document.getElementById('reviewPhoto');
+            const prev = document.getElementById('reviewPhotoPreview');
+            const f = input.files && input.files[0];
+            if (!f) { prev.style.display = 'none'; prev.removeAttribute('src'); return; }
+            if (!f.type.startsWith('image/') || f.size > 5 * 1024 * 1024) {
+                setReviewsStatus('reviewsFormStatus', 'reviews_photo_invalid', true);
+                input.value = '';
+                prev.style.display = 'none';
+                prev.removeAttribute('src');
+                return;
+            }
+            setReviewsStatus('reviewsFormStatus', '', false);
+            const url = URL.createObjectURL(f);
+            prev.src = url;
+            prev.style.display = 'block';
+        }
+        async function updateReviewsAuthState() {
+            if (!supabaseClient) return;
+            const res = await supabaseClient.auth.getUser();
+            const user = res && res.data ? res.data.user : null;
+            const loggedAs = document.getElementById('reviewsLoggedAs');
+            const logoutBtn = document.getElementById('authLogoutBtn');
+            const label = user ? (user.user_metadata && user.user_metadata.name ? user.user_metadata.name : user.email) : '';
+            if (loggedAs) {
+                loggedAs.innerText = user ? (t('reviews_logged_as_prefix') + ' ' + label) : '';
+            }
+            if (logoutBtn) logoutBtn.style.display = user ? 'inline-flex' : 'none';
+        }
+        function syncReviewsLanguage() {
+            updateReviewsAuthState();
+            const st = document.getElementById('reviewsFormStatus');
+            if (st && st.getAttribute('data-key')) setReviewsStatus('reviewsFormStatus', st.getAttribute('data-key'), st.getAttribute('data-err') === '1');
+            const as = document.getElementById('reviewsAuthStatus');
+            if (as && as.getAttribute('data-key')) setReviewsStatus('reviewsAuthStatus', as.getAttribute('data-key'), as.getAttribute('data-err') === '1');
+        }
+        async function reviewsLogin() {
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+            const st = document.getElementById('reviewsAuthStatus');
+            if (!supabaseClient) return;
+            st.removeAttribute('data-key');
+            const res = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
+            if (res.error) {
+                st.setAttribute('data-key', '');
+                const el = document.getElementById('reviewsAuthStatus');
+                el.innerText = res.error.message;
+                el.style.color = 'var(--danger)';
+                el.setAttribute('data-err', '1');
+                return;
+            }
+            setReviewsStatus('reviewsAuthStatus', '', false);
+            st.removeAttribute('data-key');
+            updateReviewsAuthState();
+        }
+        async function reviewsRegister() {
+            const name = document.getElementById('authName').value.trim();
+            const email = document.getElementById('authEmail').value.trim();
+            const password = document.getElementById('authPassword').value;
+            if (!supabaseClient) return;
+            const res = await supabaseClient.auth.signUp({ email: email, password: password, options: { data: { name: name } } });
+            const el = document.getElementById('reviewsAuthStatus');
+            if (res.error) {
+                el.innerText = res.error.message;
+                el.style.color = 'var(--danger)';
+                return;
+            }
+            el.innerText = t('reviews_success');
+            el.style.color = 'var(--success)';
+            updateReviewsAuthState();
+        }
+        async function reviewsLogout() {
+            if (!supabaseClient) return;
+            await supabaseClient.auth.signOut();
+            updateReviewsAuthState();
+        }
+        function renderReviews(rows) {
+            const list = document.getElementById('reviewsList');
+            while (list.firstChild) list.removeChild(list.firstChild);
+            const empty = document.getElementById('reviewsEmpty');
+            empty.style.display = rows.length ? 'none' : 'block';
+            rows.forEach(function (r) {
+                const card = document.createElement('div');
+                card.className = 'car-card';
+                const info = document.createElement('div');
+                info.className = 'car-info';
+                const name = document.createElement('h3');
+                name.className = 'car-title';
+                name.textContent = r.name || '';
+                info.appendChild(name);
+                const stars = document.createElement('div');
+                stars.style.color = 'var(--accent)';
+                stars.textContent = '★'.repeat(r.rating || 0) + '☆'.repeat(5 - (r.rating || 0));
+                info.appendChild(stars);
+                const text = document.createElement('p');
+                text.style.color = 'var(--text-muted)';
+                text.textContent = r.text || '';
+                info.appendChild(text);
+                if (r.photo_url && typeof SUPABASE_URL === 'string' && r.photo_url.indexOf(SUPABASE_URL + '/storage/v1/object/public/review-photos/') === 0) {
+                    const img = document.createElement('img');
+                    img.className = 'review-photo';
+                    img.src = r.photo_url;
+                    img.alt = '';
+                    img.loading = 'lazy';
+                    img.style.marginTop = '0.75rem';
+                    img.style.borderRadius = '8px';
+                    info.appendChild(img);
+                }
+                const date = document.createElement('div');
+                date.style.fontSize = '0.8rem';
+                date.style.color = 'var(--text-muted)';
+                try { date.textContent = new Date(r.created_at).toLocaleDateString(); } catch (e) { date.textContent = ''; }
+                info.appendChild(date);
+                card.appendChild(info);
+                list.appendChild(card);
+            });
+        }
+        async function loadReviews() {
+            if (!supabaseClient) return;
+            const res = await supabaseClient.from('reviews').select('name,text,rating,photo_url,created_at').eq('approved', true).order('created_at', { ascending: false });
+            if (res.error) {
+                const empty = document.getElementById('reviewsEmpty');
+                empty.style.display = 'block';
+                return;
+            }
+            renderReviews(res.data || []);
+        }
+        async function submitReview(e) {
+            e.preventDefault();
+            const st = document.getElementById('reviewsFormStatus');
+            function fail(key) {
+                st.setAttribute('data-key', key);
+                st.setAttribute('data-err', '1');
+                setReviewsStatus('reviewsFormStatus', key, true);
+            }
+            if (!supabaseClient) return;
+            const ures = await supabaseClient.auth.getUser();
+            const user = ures && ures.data ? ures.data.user : null;
+            if (!user) { fail('reviews_auth_required'); return; }
+            const text = document.getElementById('reviewText').value.trim();
+            if (!text) { fail('reviews_text_required'); return; }
+            if (!reviewRating || reviewRating < 1 || reviewRating > 5) { fail('reviews_rating_required'); return; }
+            const fileInput = document.getElementById('reviewPhoto');
+            const file = fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+            if (file && (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024)) { fail('reviews_photo_invalid'); return; }
+            st.setAttribute('data-key', 'reviews_sending');
+            st.setAttribute('data-err', '0');
+            setReviewsStatus('reviewsFormStatus', 'reviews_sending', false);
+            document.getElementById('reviewSubmitBtn').disabled = true;
+            try {
+                let photoUrl = null;
+                if (file) {
+                    const path = user.id + '/' + Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+                    const up = await supabaseClient.storage.from('review-photos').upload(path, file, { contentType: file.type });
+                    if (up.error) throw up.error;
+                    const pub = supabaseClient.storage.from('review-photos').getPublicUrl(path);
+                    photoUrl = pub.data.publicUrl;
+                }
+                const displayName = (user.user_metadata && user.user_metadata.name) ? user.user_metadata.name : (user.email || '');
+                const ins = await supabaseClient.from('reviews').insert({ user_id: user.id, name: displayName, text: text, rating: reviewRating, photo_url: photoUrl, approved: false });
+                if (ins.error) throw ins.error;
+                st.setAttribute('data-key', 'reviews_success');
+                st.setAttribute('data-err', '0');
+                setReviewsStatus('reviewsFormStatus', 'reviews_success', false);
+                document.getElementById('reviewForm').reset();
+                setReviewRating(0);
+                const prev = document.getElementById('reviewPhotoPreview');
+                prev.style.display = 'none';
+                prev.removeAttribute('src');
+            } catch (err) {
+                const el = document.getElementById('reviewsFormStatus');
+                el.removeAttribute('data-key');
+                el.innerText = err && err.message ? err.message : 'Error';
+                el.style.color = 'var(--danger)';
+            }
+            document.getElementById('reviewSubmitBtn').disabled = false;
+        }
+        function initReviews() {
+            setReviewsAuthMode('login');
+            setReviewRating(0);
+            if (!reviewsConfigured() || typeof window.supabase === 'undefined') {
+                document.getElementById('reviewsSoon').style.display = 'block';
+                document.getElementById('reviewsMain').style.display = 'none';
+                document.getElementById('reviewsList').style.display = 'none';
+                document.getElementById('reviewsEmpty').style.display = 'none';
+                return;
+            }
+            supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            supabaseClient.auth.onAuthStateChange(function () { updateReviewsAuthState(); });
+            updateReviewsAuthState();
+            loadReviews();
+        }
+        initReviews();
 
         // Modal Control
         function openContractModal() {

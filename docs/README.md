@@ -18,20 +18,28 @@
 
 ```
 Kyrgyz4x4rentals/
-├── index.html          # Единственный файл сайта (HTML + CSS + JS)
+├── index.html          # Рантайм сайта (HTML + CSS + JS, i18n-блок сгенерирован)
+├── locales/
+│   ├── ru.json         # Русские строки (источник правды)
+│   └── en.json         # Английские строки (источник правды)
+├── build.py            # Валидация ru/en + вшивание словаря (запуск перед пушем)
 ├── img/                # Фотографии автомобилей
 │   ├── lc100 n1.jfif   # Toyota LC 100 #1
 │   ├── lc100 n2.jfif   # Toyota LC 100 #2
 │   ├── lx470 n1.jfif   # Lexus LX 470 #1
 │   ├── lx470 n2.jfif   # Lexus LX 470 #2
 │   └── gx460.jfif      # Lexus GX 470
-└── docs/               # Документация
-    ├── README.md
-    ├── ARCHITECTURE.md
-    ├── IMPLEMENTATION_PLAN.md
-    ├── DEVELOPMENT_GUIDE.md
-    └── DEPLOYMENT.md
+├── docs/               # Документация
+│   ├── README.md
+│   ├── ARCHITECTURE.md
+│   ├── IMPLEMENTATION_PLAN.md
+│   ├── DEVELOPMENT_GUIDE.md
+│   └── DEPLOYMENT.md
+└── .opencode/          # Оркестрация сборки сайта (skill + 6 ролей)
 ```
+
+Тексты интерфейса правятся только в `locales/*.json`, затем `python build.py`.
+Планы: отзывы + регистрация через Supabase (см. IMPLEMENTATION_PLAN).
 
 ## Быстрый старт
 
