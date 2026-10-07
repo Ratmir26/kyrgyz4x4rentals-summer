@@ -39,7 +39,7 @@ Kyrgyz4x4rentals/
 ```
 
 Тексты интерфейса правятся только в `locales/*.json`, затем `python build.py`.
-Планы: отзывы + регистрация через Supabase (см. IMPLEMENTATION_PLAN).
+Текущий план работ — см. IMPLEMENTATION_PLAN (отзывы отменены решением владельца).
 
 ## Быстрый старт
 
