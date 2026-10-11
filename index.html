@@ -1778,5 +1778,94 @@
             document.getElementById('contractModal').classList.remove('active');
         }
     </script>
+    <script>
+        // Supabase CMS render (read-only). Placeholders = site stays static.
+        const SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
+        const SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+        (function () {
+            if (SUPABASE_URL.indexOf('PASTE_') === 0 || SUPABASE_ANON_KEY.indexOf('PASTE_') === 0) return;
+            function sbFetch(path) {
+                return fetch(SUPABASE_URL + '/rest/v1/' + path, {
+                    headers: { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY }
+                }).then(function (r) { if (!r.ok) throw new Error('sb ' + r.status); return r.json(); });
+            }
+            function esc(s) { return String(s == null ? '' : s); }
+            sbFetch('cars?select=title,badge,photo_url,color_ru,color_en&is_visible=eq.true&order=sort_order.asc').then(function (cars) {
+                if (!Array.isArray(cars) || !cars.length) return;
+                var grid = document.querySelector('.cars-grid');
+                if (!grid) return;
+                grid.textContent = '';
+                var sel = document.getElementById('carSelect');
+                if (sel) sel.textContent = '';
+                cars.forEach(function (car) {
+                    var card = document.createElement('div');
+                    card.className = 'car-card';
+                    var wrap = document.createElement('div');
+                    wrap.className = 'car-image-container';
+                    var badge = document.createElement('span');
+                    badge.className = 'car-badge';
+                    badge.textContent = esc(car.badge);
+                    var img = document.createElement('img');
+                    img.className = 'car-photo';
+                    img.alt = esc(car.title);
+                    if (car.photo_url) img.src = car.photo_url;
+                    wrap.appendChild(badge); wrap.appendChild(img);
+                    var info = document.createElement('div');
+                    info.className = 'car-info';
+                    var h = document.createElement('h3');
+                    h.className = 'car-title';
+                    h.textContent = esc(car.title);
+                    var list = document.createElement('div');
+                    list.className = 'car-specs-list';
+                    var specs = [
+                        ['fa-gauge-high', translations[currentLang].spec_engine],
+                        ['fa-gas-pump', translations[currentLang].spec_fuel],
+                        ['fa-truck-monster', translations[currentLang].spec_drive],
+                        ['fa-palette', (currentLang === 'ru' ? 'Цвет: ' : 'Color: ') + (currentLang === 'ru' ? esc(car.color_ru) : esc(car.color_en))],
+                        ['fa-gear', translations[currentLang].spec_transmission],
+                        ['fa-campground', translations[currentLang].spec_tent]
+                    ];
+                    specs.forEach(function (s) {
+                        var item = document.createElement('div');
+                        item.className = 'spec-item';
+                        var icon = document.createElement('i');
+                        icon.className = 'fa-solid ' + s[0];
+                        var sp = document.createElement('span');
+                        sp.textContent = s[1];
+                        item.appendChild(icon); item.appendChild(sp);
+                        list.appendChild(item);
+                    });
+                    var a = document.createElement('a');
+                    a.href = '#pricing';
+                    a.className = 'btn btn-primary';
+                    a.style.cssText = 'margin-top:auto; text-align:center; justify-content:center;';
+                    a.setAttribute('data-lang', 'btn_book');
+                    a.textContent = translations[currentLang].btn_book;
+                    info.appendChild(h); info.appendChild(list); info.appendChild(a);
+                    card.appendChild(wrap); card.appendChild(info);
+                    grid.appendChild(card);
+                    if (sel) {
+                        var opt = document.createElement('option');
+                        opt.value = esc(car.title);
+                        opt.textContent = esc(car.title);
+                        sel.appendChild(opt);
+                    }
+                });
+                if (typeof calculateTotal === 'function') calculateTotal();
+            }).catch(function () {});
+            sbFetch('site_content?select=key,value_ru,value_en').then(function (rows) {
+                if (!Array.isArray(rows) || !rows.length) return;
+                var changed = false;
+                rows.forEach(function (r) {
+                    if (r && r.key && translations.ru && Object.prototype.hasOwnProperty.call(translations.ru, r.key)) {
+                        if (r.value_ru != null) { translations.ru[r.key] = r.value_ru; changed = true; }
+                        if (r.value_en != null) translations.en[r.key] = r.value_en;
+                    }
+                });
+                if (changed && typeof applyLanguage === 'function') applyLanguage();
+                if (typeof calculateTotal === 'function') calculateTotal();
+            }).catch(function () {});
+        })();
+    </script>
 </body>
 </html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Админка — Kyrgyz4x4rentals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script>
+<style>
+:root{--bg-primary:#0a0f18;--bg-secondary:#121927;--bg-card:#1a2336;--bg-card-hover:#222d44;--text-main:#f1f5f9;--text-muted:#94a3b8;--accent:#ff6b00;--accent-hover:#e05d00;--accent-glow:rgba(255,107,0,.25);--border-color:rgba(255,255,255,.08);--nav-bg:rgba(10,15,24,.85);--shadow-sm:0 4px 6px -1px rgba(0,0,0,.3);--shadow-lg:0 10px 25px -5px rgba(0,0,0,.5);--modal-bg:#121824;--danger:#ef4444;--success:#10b981;--transition-speed:.3s}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background-color:var(--bg-primary);color:var(--text-main);line-height:1.6}
+h1,h2,h3,.brand-font{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em}
+.admin-wrap{max-width:720px;margin:0 auto;padding:1.5rem 1rem 8rem}
+.admin-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 0}
+.admin-top a{color:var(--text-muted);text-decoration:none;font-size:.9rem}
+.badge{display:inline-block;padding:.5rem 1rem;background:var(--accent-glow);border:1px solid var(--accent);color:var(--accent);border-radius:50px;font-weight:600;font-size:.85rem;margin-bottom:1.5rem;text-transform:uppercase;letter-spacing:1px}
+.calculator-box{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:2rem;margin-bottom:1.5rem}
+.form-group{margin-bottom:1.5rem}
+.form-group label{display:block;margin-bottom:.5rem;font-weight:600;font-size:.9rem}
+.form-control{width:100%;padding:.8rem 1rem;background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:8px;color:var(--text-main);font-family:inherit;font-size:1rem;min-height:44px}
+textarea.form-control{min-height:88px;resize:vertical}
+.form-control:focus{outline:none;border-color:var(--accent)}
+.btn{padding:.9rem 2rem;border-radius:8px;font-weight:700;text-decoration:none;transition:all var(--transition-speed);display:inline-flex;align-items:center;gap:.5rem;cursor:pointer;border:none;font-size:1rem;min-height:44px;justify-content:center}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 15px var(--accent-glow)}
+.btn-primary:hover{background:var(--accent-hover)}
+.btn-secondary{background:var(--bg-card);color:var(--text-main);border:1px solid var(--border-color)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
+.btn-block{width:100%}
+.car-card{background:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;transition:all var(--transition-speed);display:flex;flex-direction:column;position:relative;margin-bottom:1.5rem}
+.car-image-container{position:relative;height:240px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:1rem}
+.car-photo{width:100%;height:100%;object-fit:cover;object-position:center}
+.car-badge{position:absolute;top:1rem;right:1rem;background:rgba(10,15,24,.75);color:#fff;padding:.3rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600;border:1px solid rgba(255,255,255,.1)}
+.car-info{padding:1.5rem;display:flex;flex-direction:column;gap:0}
+.calc-result{background:var(--bg-secondary);border-radius:8px;padding:1.25rem;margin-top:1.5rem;border-left:4px solid var(--accent)}
+.admin-tabs{display:flex;gap:.75rem;margin:1.5rem 0}
+.admin-tabs .btn{flex:1}
+.admin-tabs .btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.admin-switch{position:relative;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;min-height:44px;user-select:none}
+.admin-switch input{position:absolute;opacity:0;width:44px;height:44px;margin:0;cursor:pointer}
+.admin-switch .track{width:52px;height:30px;border-radius:999px;background:var(--bg-secondary);border:1px solid var(--border-color);position:relative;transition:background var(--transition-speed);flex-shrink:0}
+.admin-switch .track::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--text-muted);transition:all var(--transition-speed)}
+.admin-switch input:checked + .track{background:var(--accent-glow);border-color:var(--accent)}
+.admin-switch input:checked + .track::after{left:25px;background:var(--accent)}
+.admin-switch input:focus-visible + .track{outline:2px solid var(--accent);outline-offset:2px}
+.admin-toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:5.5rem;z-index:3000;background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-main);border-radius:12px;padding:.9rem 1.25rem;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:opacity var(--transition-speed),transform var(--transition-speed);max-width:min(92vw,680px);font-size:.95rem}
+.admin-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.admin-toast.success{border-color:var(--success)}
+.admin-toast.error{border-color:var(--danger)}
+.admin-sticky-save{position:fixed;left:0;right:0;bottom:0;z-index:2000;background:var(--nav-bg);backdrop-filter:blur(12px);border-top:1px solid var(--border-color);padding:.75rem 1rem}
+.admin-sticky-save-inner{max-width:720px;margin:0 auto;display:flex;gap:.75rem}
+.admin-sticky-save-inner .btn{flex:1;padding:.8rem 1rem}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;visibility:hidden;transition:all var(--transition-speed)}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal-body{background:var(--modal-bg);border:1px solid var(--border-color);border-radius:16px;max-width:800px;width:100%;max-height:85vh;display:flex;flex-direction:column;box-shadow:var(--shadow-lg)}
+.modal-header{padding:1.5rem;border-bottom:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center}
+.modal-content{padding:2rem;overflow-y:auto;font-size:.95rem;line-height:1.7}
+.modal-footer{padding:1rem 1.5rem;border-top:1px solid var(--border-color);display:flex;justify-content:flex-end;gap:1rem}
+.empty-state{text-align:center;color:var(--text-muted);padding:2rem 1rem}
+.error-state{text-align:center;color:var(--danger);padding:2rem 1rem}
+.preview-img{width:100%;max-height:220px;object-fit:cover;border-radius:8px;border:1px solid var(--border-color);margin-top:.5rem}
+.hint{font-size:.85rem;color:var(--text-muted)}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.html-flag{font-size:.8rem;color:var(--accent);font-weight:600}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+<div class="admin-wrap">
+  <div class="admin-top">
+    <span class="brand-font" style="font-weight:700"><i class="fa-solid fa-truck-monster" style="color:var(--accent)"></i> Kyrgyz4x4rentals · Админка</span>
+    <a href="index.html">← На сайт</a>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="loginScreen" class="calculator-box">
+    <span class="badge">Вход</span>
+    <h1 style="margin-bottom:.5rem">Вход в админку</h1>
+    <p class="hint" style="margin-bottom:1.5rem">Доступ только для своих</p>
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input id="loginEmail" type="email" class="form-control" autocomplete="username" placeholder="admin@example.com">
+    </div>
+    <div class="form-group">
+      <label for="loginPass">Пароль</label>
+      <input id="loginPass" type="password" class="form-control" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <div id="loginError" class="error-state hidden"></div>
+    <button id="loginBtn" class="btn btn-primary btn-block" type="button"><i class="fa-solid fa-right-to-bracket"></i> Войти</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="adminMain" class="hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem">
+      <span id="adminUser" class="hint"></span>
+      <button id="logoutBtn" class="btn btn-secondary" type="button" style="min-height:44px;padding:.6rem 1rem"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+    </div>
+    <div class="admin-tabs">
+      <button id="tabCars" class="btn btn-secondary active" type="button"><i class="fa-solid fa-car"></i> Машины</button>
+      <button id="tabTexts" class="btn btn-secondary" type="button"><i class="fa-solid fa-font"></i> Тексты</button>
+    </div>
+
+    <!-- CARS -->
+    <div id="paneCars">
+      <div class="calculator-box">
+        <h2 style="margin-bottom:1rem">Добавить машину</h2>
+        <div class="form-group"><label for="newTitle">Название</label><input id="newTitle" class="form-control" type="text" placeholder="Toyota Land Cruiser 100 #3"></div>
+        <div class="form-group"><label for="newBadge">Бейдж</label><input id="newBadge" class="form-control" type="text" placeholder="Toyota TLC 100"></div>
+        <div class="form-group"><label for="newPhoto">Фото (image/*, до 5 МБ)</label><input id="newPhoto" class="form-control" type="file" accept="image/*"><img id="newPreview" class="preview-img hidden" alt="Превью фото"></div>
+        <div class="row-2">
+          <div class="form-group"><label for="newColorRu">Цвет RU</label><input id="newColorRu" class="form-control" type="text" placeholder="Черный"></div>
+          <div class="form-group"><label for="newColorEn">Цвет EN</label><input id="newColorEn" class="form-control" type="text" placeholder="Black"></div>
+        </div>
+        <div class="form-group"><label for="newOrder">Порядок</label><input id="newOrder" class="form-control" type="number" value="100"></div>
+        <button id="addCarBtn" class="btn btn-primary btn-block" type="button"><i class="fa-solid fa-plus"></i> Добавить машину</button>
+      </div>
+      <div id="carsList"></div>
+      <div id="carsEmpty" class="calculator-box empty-state hidden">Машин пока нет — добавьте первую выше.</div>
+      <div id="carsError" class="calculator-box error-state hidden"></div>
+    </div>
+
+    <!-- TEXTS -->
+    <div id="paneTexts" class="hidden">
+      <div class="calculator-box">
+        <h2 style="margin-bottom:.25rem">Тарифы</h2>
+        <p class="hint" style="margin-bottom:1rem">Тарифы и минимальный срок.</p>
+        <div class="form-group"><label for="t_price_rate1">price_rate1 <span class="html-flag hidden">есть &lt;b&gt;</span></label><textarea id="t_price_rate1" class="form-control" data-key="price_rate1"></textarea></div>
+        <div class="form-group"><label for="t_price_rate1_en">price_rate1 (EN)</label><textarea id="t_price_rate1_en" class="form-control" data-key-en="price_rate1"></textarea></div>
+        <div class="form-group"><label for="t_price_rate2">price_rate2 <span class="html-flag hidden">есть &lt;b&gt;</span></label><textarea id="t_price_rate2" class="form-control" data-key="price_rate2"></textarea></div>
+        <div class="form-group"><label for="t_price_rate2_en">price_rate2 (EN)</label><textarea id="t_price_rate2_en" class="form-control" data-key-en="price_rate2"></textarea></div>
+        <div class="form-group"><label for="t_price_min_days">price_min_days <span class="html-flag hidden">есть &lt;b&gt;</span></label><input id="t_price_min_days" class="form-control" data-key="price_min_days" type="text"></div>
+        <div class="form-group"><label for="t_price_min_days_en">price_min_days (EN)</label><input id="t_price_min_days_en" class="form-control" data-key-en="price_min_days" type="text"></div>
+      </div>
+      <div class="calculator-box">
+        <h2 style="margin-bottom:.25rem">Залог</h2>
+        <p class="hint" style="margin-bottom:1rem">Депозит и франшиза.</p>
+        <div class="form-group"><label for="t_price_deposit">price_deposit <span class="html-flag hidden">есть &lt;b&gt;</span></label><input id="t_price_deposit" class="form-control" data-key="price_deposit" type="text"></div>
+        <div class="form-group"><label for="t_price_deposit_en">price_deposit (EN)</label><input id="t_price_deposit_en" class="form-control" data-key-en="price_deposit" type="text"></div>
+        <div class="form-group"><label for="t_terms_i1">terms_i1 <span class="html-flag hidden">есть &lt;b&gt;</span></label><input id="t_terms_i1" class="form-control" data-key="terms_i1" type="text"></div>
+        <div class="form-group"><label for="t_terms_i1_en">terms_i1 (EN)</label><input id="t_terms_i1_en" class="form-control" data-key-en="terms_i1" type="text"></div>
+        <div class="form-group"><label for="t_terms_i2">terms_i2 <span class="html-flag hidden">есть &lt;b&gt;</span></label><textarea id="t_terms_i2" class="form-control" data-key="terms_i2"></textarea></div>
+        <div class="form-group"><label for="t_terms_i2_en">terms_i2 (EN)</label><textarea id="t_terms_i2_en" class="form-control" data-key-en="terms_i2"></textarea></div>
+      </div>
+      <div class="calculator-box">
+        <h2 style="margin-bottom:.25rem">Условия</h2>
+        <p class="hint" style="margin-bottom:1rem">Регионы приёма/сдачи.</p>
+        <div class="form-group"><label for="t_terms_g10">terms_g10 <span class="html-flag hidden">есть &lt;b&gt;</span></label><textarea id="t_terms_g10" class="form-control" data-key="terms_g10"></textarea></div>
+        <div class="form-group"><label for="t_terms_g10_en">terms_g10 (EN)</label><textarea id="t_terms_g10_en" class="form-control" data-key-en="terms_g10"></textarea></div>
+        <div class="form-group"><label for="t_price_region_note">price_region_note <span class="html-flag hidden">есть &lt;b&gt;</span></label><textarea id="t_price_region_note" class="form-control" data-key="price_region_note"></textarea></div>
+        <div class="form-group"><label for="t_price_region_note_en">price_region_note (EN)</label><textarea id="t_price_region_note_en" class="form-control" data-key-en="price_region_note"></textarea></div>
+      </div>
+      <div id="textsError" class="calculator-box error-state hidden"></div>
+    </div>
+  </div>
+</div>
+
+<div class="admin-sticky-save hidden" id="stickyBar">
+  <div class="admin-sticky-save-inner">
+    <button id="saveTextsBtn" class="btn btn-primary" type="button"><i class="fa-solid fa-floppy-disk"></i> Сохранить тексты</button>
+    <a href="index.html" class="btn btn-secondary" id="checkSiteBtn"><i class="fa-solid fa-eye"></i> Проверить на сайте</a>
+  </div>
+</div>
+
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal-body">
+    <div class="modal-header"><h3 class="brand-font">Удалить машину?</h3></div>
+    <div class="modal-content"><p>Это действие нельзя отменить. Фото останется в хранилище.</p><p id="confirmCarName" class="hint"></p></div>
+    <div class="modal-footer">
+      <button id="confirmCancel" class="btn btn-secondary" type="button">Отмена</button>
+      <button id="confirmDelete" class="btn btn-danger" type="button">Удалить</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast" id="toast" role="status"></div>
+
+<script>
+var SUPABASE_URL = "PASTE_SUPABASE_URL_HERE";
+var SUPABASE_ANON_KEY = "PASTE_SUPABASE_ANON_KEY_HERE";
+var sb = null;
+var pendingDeleteId = null;
+var TEXT_KEYS = ["price_rate1","price_rate2","price_min_days","price_deposit","terms_i1","terms_i2","terms_g10","price_region_note"];
+var ALLOWED_EXT = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
+
+function toast(msg, kind) {
+  var el = document.getElementById("toast");
+  el.textContent = msg;
+  el.className = "admin-toast show " + (kind || "");
+  clearTimeout(el._t);
+  el._t = setTimeout(function () { el.className = "admin-toast"; }, 2600);
+}
+function show(el, on) { el.classList.toggle("hidden", !on); }
+function setErr(id, msg) {
+  var el = document.getElementById(id);
+  if (!msg) { el.classList.add("hidden"); el.textContent = ""; return; }
+  el.textContent = msg; el.classList.remove("hidden");
+}
+function configured() {
+  return SUPABASE_URL.indexOf("PASTE_") !== 0 && SUPABASE_ANON_KEY.indexOf("PASTE_") !== 0;
+}
+function initSb() {
+  if (!configured()) return false;
+  if (!sb) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return true;
+}
+
+document.getElementById("loginBtn").addEventListener("click", function () {
+  setErr("loginError", "");
+  if (!initSb()) { setErr("loginError", "Вставьте SUPABASE_URL и ANON KEY в admin.html"); return; }
+  var email = document.getElementById("loginEmail").value.trim();
+  var pass = document.getElementById("loginPass").value;
+  if (!email || !pass) { setErr("loginError", "Введите email и пароль"); return; }
+  sb.auth.signInWithPassword({ email: email, password: pass }).then(function (res) {
+    if (res.error) { setErr("loginError", "Неверный email или пароль"); return; }
+    enterAdmin(res.data.user ? res.data.user.email : email);
+  });
+});
+document.getElementById("logoutBtn").addEventListener("click", function () {
+  if (sb) sb.auth.signOut();
+  location.reload();
+});
+function enterAdmin(email) {
+  show(document.getElementById("loginScreen"), false);
+  show(document.getElementById("adminMain"), true);
+  show(document.getElementById("stickyBar"), true);
+  document.getElementById("adminUser").textContent = email || "";
+  loadCars();
+  loadTexts();
+}
+sbCheckSession();
+function sbCheckSession() {
+  if (!configured()) return;
+  initSb();
+  sb.auth.getSession().then(function (res) {
+    if (res.data && res.data.session) enterAdmin(res.data.session.user.email);
+  });
+}
+
+document.getElementById("tabCars").addEventListener("click", function () { switchTab(true); });
+document.getElementById("tabTexts").addEventListener("click", function () { switchTab(false); });
+function switchTab(cars) {
+  document.getElementById("tabCars").classList.toggle("active", cars);
+  document.getElementById("tabTexts").classList.toggle("active", !cars);
+  show(document.getElementById("paneCars"), cars);
+  show(document.getElementById("paneTexts"), !cars);
+}
+
+function loadCars() {
+  setErr("carsError", "");
+  sb.from("cars").select("*").order("sort_order", { ascending: true }).then(function (res) {
+    if (res.error) { setErr("carsError", "Ошибка загрузки: " + res.error.message); return; }
+    renderCars(res.data || []);
+  });
+}
+function renderCars(rows) {
+  var list = document.getElementById("carsList");
+  list.textContent = "";
+  show(document.getElementById("carsEmpty"), rows.length === 0);
+  rows.forEach(function (car) {
+    var card = document.createElement("div");
+    card.className = "car-card";
+    var imgWrap = document.createElement("div");
+    imgWrap.className = "car-image-container";
+    var badge = document.createElement("span");
+    badge.className = "car-badge";
+    badge.textContent = car.badge || "";
+    var img = document.createElement("img");
+    img.className = "car-photo";
+    img.alt = car.title || "car";
+    if (car.photo_url) img.src = car.photo_url;
+    imgWrap.appendChild(badge); imgWrap.appendChild(img);
+    var info = document.createElement("div");
+    info.className = "car-info";
+    var fields = [
+      ["Название", "title", car.title || ""],
+      ["Бейдж", "badge", car.badge || ""],
+      ["Цвет RU", "color_ru", car.color_ru || ""],
+      ["Цвет EN", "color_en", car.color_en || ""],
+      ["Порядок", "sort_order", String(car.sort_order == null ? 100 : car.sort_order)]
+    ];
+    var inputs = {};
+    fields.forEach(function (f) {
+      var g = document.createElement("div");
+      g.className = "form-group";
+      var lab = document.createElement("label");
+      lab.textContent = f[0];
+      var inp = document.createElement("input");
+      inp.className = "form-control";
+      inp.type = f[1] === "sort_order" ? "number" : "text";
+      inp.value = f[2];
+      g.appendChild(lab); g.appendChild(inp);
+      info.appendChild(g);
+      inputs[f[1]] = inp;
+    });
+    var gPhoto = document.createElement("div");
+    gPhoto.className = "form-group";
+    var labP = document.createElement("label");
+    labP.textContent = "Фото (замена)";
+    var fileInp = document.createElement("input");
+    fileInp.className = "form-control";
+    fileInp.type = "file";
+    fileInp.accept = "image/*";
+    gPhoto.appendChild(labP); gPhoto.appendChild(fileInp);
+    info.appendChild(gPhoto);
+    var visLabel = document.createElement("label");
+    visLabel.className = "admin-switch";
+    var visInp = document.createElement("input");
+    visInp.type = "checkbox";
+    visInp.checked = !!car.is_visible;
+    var track = document.createElement("span");
+    track.className = "track";
+    var visText = document.createElement("span");
+    visText.textContent = "Видна на сайте";
+    visLabel.appendChild(visInp); visLabel.appendChild(track); visLabel.appendChild(visText);
+    info.appendChild(visLabel);
+    var btnRow = document.createElement("div");
+    btnRow.style.cssText = "display:flex;gap:.75rem;margin-top:1rem";
+    var saveBtn = document.createElement("button");
+    saveBtn.className = "btn btn-primary";
+    saveBtn.type = "button";
+    saveBtn.style.flex = "1";
+    saveBtn.textContent = "Сохранить";
+    var delBtn = document.createElement("button");
+    delBtn.className = "btn btn-danger";
+    delBtn.type = "button";
+    delBtn.textContent = "Удалить";
+    btnRow.appendChild(saveBtn); btnRow.appendChild(delBtn);
+    info.appendChild(btnRow);
+    fileInp.addEventListener("change", function () {
+      var f = fileInp.files[0];
+      if (!f) return;
+      var r = new FileReader();
+      r.onload = function () { img.src = r.result; };
+      r.readAsDataURL(f);
+    });
+    saveBtn.addEventListener("click", function () {
+      saveCar(car.id, inputs, visInp, fileInp);
+    });
+    delBtn.addEventListener("click", function () {
+      pendingDeleteId = car.id;
+      document.getElementById("confirmCarName").textContent = car.title || "";
+      document.getElementById("confirmModal").classList.add("active");
+    });
+    card.appendChild(imgWrap); card.appendChild(info);
+    list.appendChild(card);
+  });
+}
+
+function validateImage(file) {
+  var ext = (file.name.split(".").pop() || "").toLowerCase();
+  if (file.type.indexOf("image/") !== 0) return "Файл должен быть изображением";
+  if (!ALLOWED_EXT[ext]) return "Разрешены только jpg, jpeg, png, webp";
+  if (file.size > 5 * 1024 * 1024) return "Фото больше 5 МБ";
+  return null;
+}
+function compressImage(file) {
+  return new Promise(function (resolve, reject) {
+    var img = new Image();
+    var url = URL.createObjectURL(file);
+    img.onload = function () {
+      URL.revokeObjectURL(url);
+      var scale = Math.min(1, 1600 / Math.max(img.width, img.height));
+      var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      var c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      c.toBlob(function (b) { b ? resolve(b) : reject(new Error("compress")); }, "image/jpeg", 0.82);
+    };
+    img.onerror = function () { reject(new Error("decode")); };
+    img.src = url;
+  });
+}
+function uploadPhoto(file) {
+  return sb.auth.getUser().then(function (u) {
+    if (!u.data.user) throw new Error("Нет сессии");
+    var err = validateImage(file);
+    if (err) throw new Error(err);
+    return compressImage(file).then(function (blob) {
+      var ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+      if (!ALLOWED_EXT[ext]) ext = "jpg";
+      var path = u.data.user.id + "/" + Date.now() + "." + ext;
+      return sb.storage.from("car-photos").upload(path, blob, { contentType: "image/jpeg", upsert: false }).then(function (res) {
+        if (res.error) throw res.error;
+        return sb.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
+      });
+    });
+  });
+}
+
+function saveCar(id, inputs, visInp, fileInp) {
+  var patch = {
+    title: inputs.title.value.trim(),
+    badge: inputs.badge.value.trim(),
+    color_ru: inputs.color_ru.value.trim(),
+    color_en: inputs.color_en.value.trim(),
+    sort_order: parseInt(inputs.sort_order.value, 10) || 100,
+    is_visible: visInp.checked
+  };
+  function doUpdate(url) {
+    if (url !== undefined) patch.photo_url = url;
+    sb.from("cars").update(patch).eq("id", id).then(function (res) {
+      if (res.error) { toast("Ошибка сохранения: " + res.error.message, "error"); return; }
+      toast("Машина сохранена", "success");
+      loadCars();
+    });
+  }
+  if (fileInp && fileInp.files[0]) {
+    uploadPhoto(fileInp.files[0]).then(function (url) { doUpdate(url); }, function (e) { toast(e.message, "error"); });
+  } else doUpdate(undefined);
+}
+
+document.getElementById("newPhoto").addEventListener("change", function (e) {
+  var f = e.target.files[0];
+  var prev = document.getElementById("newPreview");
+  if (!f) { prev.classList.add("hidden"); return; }
+  var r = new FileReader();
+  r.onload = function () { prev.src = r.result; prev.classList.remove("hidden"); };
+  r.readAsDataURL(f);
+});
+document.getElementById("addCarBtn").addEventListener("click", function () {
+  var title = document.getElementById("newTitle").value.trim();
+  if (!title) { toast("Введите название", "error"); return; }
+  var file = document.getElementById("newPhoto").files[0];
+  function insert(url) {
+    sb.from("cars").insert({
+      title: title,
+      badge: document.getElementById("newBadge").value.trim(),
+      photo_url: url || null,
+      color_ru: document.getElementById("newColorRu").value.trim(),
+      color_en: document.getElementById("newColorEn").value.trim(),
+      sort_order: parseInt(document.getElementById("newOrder").value, 10) || 100,
+      is_visible: true
+    }).then(function (res) {
+      if (res.error) { toast("Ошибка: " + res.error.message, "error"); return; }
+      toast("Машина добавлена", "success");
+      loadCars();
+    });
+  }
+  if (file) uploadPhoto(file).then(function (u) { insert(u); }, function (e) { toast(e.message, "error"); });
+  else sb.auth.getUser().then(function (r) {
+    if (!r.data.user) { toast("Нет сессии", "error"); return; }
+    insert(null);
+  }, function (e) { toast(e.message, "error"); });
+});
+
+document.getElementById("confirmCancel").addEventListener("click", function () {
+  pendingDeleteId = null;
+  document.getElementById("confirmModal").classList.remove("active");
+});
+document.getElementById("confirmDelete").addEventListener("click", function () {
+  if (!pendingDeleteId) return;
+  sb.from("cars").delete().eq("id", pendingDeleteId).then(function (res) {
+    pendingDeleteId = null;
+    document.getElementById("confirmModal").classList.remove("active");
+    if (res.error) { toast("Ошибка удаления: " + res.error.message, "error"); return; }
+    toast("Машина удалена", "success");
+    loadCars();
+  });
+});
+
+function loadTexts() {
+  setErr("textsError", "");
+  sb.from("site_content").select("key,value_ru,value_en").in("key", TEXT_KEYS).then(function (res) {
+    if (res.error) { setErr("textsError", "Ошибка загрузки: " + res.error.message); return; }
+    var map = {};
+    (res.data || []).forEach(function (r) { map[r.key] = r; });
+    TEXT_KEYS.forEach(function (k) {
+      var ruEl = document.querySelector('[data-key="' + k + '"]');
+      var enEl = document.querySelector('[data-key-en="' + k + '"]');
+      var row = map[k];
+      if (ruEl) {
+        ruEl.value = row ? (row.value_ru || "") : "";
+        var flag = ruEl.closest(".form-group").querySelector(".html-flag");
+        if (flag) flag.classList.toggle("hidden", (row && row.value_ru || "").indexOf("<b>") === -1 && (row && row.value_en || "").indexOf("<b>") === -1);
+      }
+      if (enEl) enEl.value = row ? (row.value_en || "") : "";
+    });
+  });
+}
+document.getElementById("saveTextsBtn").addEventListener("click", function () {
+  var ops = TEXT_KEYS.map(function (k) {
+    var ruEl = document.querySelector('[data-key="' + k + '"]');
+    var enEl = document.querySelector('[data-key-en="' + k + '"]');
+    return sb.from("site_content").upsert({ key: k, value_ru: ruEl.value, value_en: enEl.value }, { onConflict: "key" });
+  });
+  Promise.all(ops).then(function (results) {
+    var bad = results.filter(function (r) { return r.error; });
+    if (bad.length) { toast("Ошибка сохранения текстов", "error"); return; }
+    toast("Тексты сохранены", "success");
+  });
+});
+</script>
+</body>
+</html>
