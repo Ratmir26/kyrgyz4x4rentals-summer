@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Админка — Kyrgyz4x4rentals</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚙</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -81,6 +82,7 @@ textarea.form-control{min-height:88px;resize:vertical}
     <span class="badge">Вход</span>
     <h1 style="margin-bottom:.5rem">Вход в админку</h1>
     <p class="hint" style="margin-bottom:1.5rem">Доступ только для своих</p>
+    <form id="loginForm" novalidate>
     <div class="form-group">
       <label for="loginEmail">Email</label>
       <input id="loginEmail" type="email" class="form-control" autocomplete="username" placeholder="admin@example.com">
@@ -90,7 +92,8 @@ textarea.form-control{min-height:88px;resize:vertical}
       <input id="loginPass" type="password" class="form-control" autocomplete="current-password" placeholder="••••••••">
     </div>
     <div id="loginError" class="error-state hidden"></div>
-    <button id="loginBtn" class="btn btn-primary btn-block" type="button"><i class="fa-solid fa-right-to-bracket"></i> Войти</button>
+    <button id="loginBtn" class="btn btn-primary btn-block" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Войти</button>
+    </form>
   </div>
 
   <!-- MAIN -->
@@ -208,7 +211,7 @@ function initSb() {
   return true;
 }
 
-document.getElementById("loginBtn").addEventListener("click", function () {
+function doLogin() {
   setErr("loginError", "");
   if (!initSb()) { setErr("loginError", "Вставьте SUPABASE_URL и ANON KEY в admin.html"); return; }
   var email = document.getElementById("loginEmail").value.trim();
@@ -218,6 +221,10 @@ document.getElementById("loginBtn").addEventListener("click", function () {
     if (res.error) { setErr("loginError", "Неверный email или пароль"); return; }
     enterAdmin(res.data.user ? res.data.user.email : email);
   });
+}
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  doLogin();
 });
 document.getElementById("logoutBtn").addEventListener("click", function () {
   if (sb) sb.auth.signOut();
