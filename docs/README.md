@@ -26,7 +26,7 @@ Kyrgyz4x4rentals/
 ├── img/                # Фотографии автомобилей
 │   ├── lc100 n1.jfif   # Toyota LC 100 #1
 │   ├── lc100 n2.jfif   # Toyota LC 100 #2
-│   ├── lx470 n1.jfif   # Lexus LX 470 #1
+│   ├── lx470-n1.jfif   # Lexus LX 470 #1
 │   ├── lx470 n2.jfif   # Lexus LX 470 #2
 │   └── gx460.jfif      # Lexus GX 470
 ├── docs/               # Документация

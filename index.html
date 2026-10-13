@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="page_title">Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане</title>
+    <title data-lang="page_title">Аренда внедорожников 4x4 в Бишкеке, Кыргызстан — Kyrgyz4x4rentals</title>
+    <meta name="description" content="Аренда экспедиционных внедорожников Toyota Land Cruiser, Lexus LX/GX с палаткой на крыше в Бишкеке. От 150€/сутки, мин. 5 дней.">
+    <meta name="keywords" content="аренда внедорожников Бишкек, 4x4 rental Kyrgyzstan, Toyota Land Cruiser rental, Lexus LX rental, rooftop tent Kyrgyzstan">
+    <link rel="canonical" href="https://kyrgyz4x4rentals.com/">
+    <link rel="alternate" hreflang="ru" href="https://kyrgyz4x4rentals.com/?lang=ru">
+    <link rel="alternate" hreflang="en" href="https://kyrgyz4x4rentals.com/?lang=en">
+    <link rel="alternate" hreflang="x-default" href="https://kyrgyz4x4rentals.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://kyrgyz4x4rentals.com/">
+    <meta property="og:title" content="Аренда внедорожников 4x4 в Бишкеке, Кыргызстан — Kyrgyz4x4rentals">
+    <meta property="og:description" content="Аренда экспедиционных внедорожников Toyota Land Cruiser, Lexus LX/GX с палаткой на крыше в Бишкеке. От 150€/сутки, мин. 5 дней.">
+    <meta property="og:image" content="https://kyrgyz4x4rentals.com/img/lx470-n1.jfif">
+    <meta property="og:image:alt" content="Lexus LX 470 4x4 with rooftop tent — Kyrgyz4x4rentals Bishkek">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Аренда внедорожников 4x4 в Бишкеке, Кыргызстан — Kyrgyz4x4rentals">
+    <meta name="twitter:description" content="Аренда экспедиционных внедорожников Toyota Land Cruiser, Lexus LX/GX с палаткой на крыше в Бишкеке. От 150€/сутки, мин. 5 дней.">
+    <meta name="twitter:image" content="https://kyrgyz4x4rentals.com/img/lx470-n1.jfif">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚙</text></svg>">
     <!-- Google Fonts & FontAwesome icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1028,7 +1045,7 @@
             <div class="car-card">
                 <div class="car-image-container">
                     <span class="car-badge">Lexus LX 470</span>
-                    <img class="car-photo" src="img/lx470 n1.jfif" alt="Lexus LX 470 #1">
+                    <img class="car-photo" src="img/lx470-n1.jfif" alt="Lexus LX 470 #1">
                 </div>
                 <div class="car-info">
                     <h3 class="car-title">Lexus LX 470 #1</h3>
@@ -1538,7 +1555,8 @@
                 "contact_whatsapp_label": "WhatsApp:",
                 "contact_telegram_label": "Telegram:",
                 "contact_instagram_label": "Instagram:",
-                "page_title": "Kyrgyz4x4rentals.com — Аренда внедорожников в Кыргызстане",
+                "page_title": "Аренда внедорожников 4x4 в Бишкеке, Кыргызстан — Kyrgyz4x4rentals",
+                "meta_description": "Аренда экспедиционных внедорожников Toyota Land Cruiser, Lexus LX/GX с палаткой на крыше в Бишкеке. От 150€/сутки, мин. 5 дней.",
                 "footer_rights": "© 2026 Kyrgyz4x4rentals. Все права защищены.",
                 "theme_title": "Сменить тему",
                 "spec_drive": "Полный привод (4WD)",
@@ -1650,7 +1668,8 @@
                 "contact_whatsapp_label": "WhatsApp:",
                 "contact_telegram_label": "Telegram:",
                 "contact_instagram_label": "Instagram:",
-                "page_title": "Kyrgyz4x4rentals.com — 4x4 Rental in Kyrgyzstan",
+                "page_title": "4x4 SUV Rental in Bishkek, Kyrgyzstan — Kyrgyz4x4rentals",
+                "meta_description": "Expedition 4x4 rental in Bishkek, Kyrgyzstan: Toyota Land Cruiser, Lexus LX/GX with rooftop tent. From €150/day, min 5 days.",
                 "footer_rights": "© 2026 Kyrgyz4x4rentals. All rights reserved.",
                 "theme_title": "Switch theme",
                 "spec_drive": "Full Drive (4WD)",
@@ -1669,9 +1688,24 @@
         // The contract modal is intentionally English-only (owner's requirement) and has no data-lang keys.
         let currentLang = 'ru';
         try {
-            const saved = localStorage.getItem('k4x4-lang');
-            if (saved === 'ru' || saved === 'en') currentLang = saved;
+            const q = new URLSearchParams(window.location.search).get('lang');
+            if (q === 'ru' || q === 'en') {
+                currentLang = q;
+            } else {
+                const saved = localStorage.getItem('k4x4-lang');
+                if (saved === 'ru' || saved === 'en') currentLang = saved;
+            }
         } catch (e) { /* private mode: keep default */ }
+
+        // Mini-sanitizer for dictionary values: allow only bare <b> / </b>, strip all other tags and <b> attributes.
+        function sanitizeDictHtml(value) {
+            var s = String(value);
+            s = s.replace(/<\s*\/\s*b\s*>/gi, '___BCLOSE___');
+            s = s.replace(/<\s*b(\s[^<>]*)?\s*\/?\s*>/gi, '___BOPEN___');
+            s = s.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            s = s.split('___BOPEN___').join('<b>').split('___BCLOSE___').join('</b>');
+            return s;
+        }
 
         function applyLanguage() {
             document.documentElement.lang = currentLang;
@@ -1685,14 +1719,28 @@
             document.querySelectorAll('[data-lang]').forEach(element => {
                 const key = element.getAttribute('data-lang');
                 if (Object.prototype.hasOwnProperty.call(dict, key)) {
-                    element.innerHTML = dict[key];
+                    element.innerHTML = sanitizeDictHtml(dict[key]);
                 }
             });
 
             const themeBtn = document.getElementById('themeBtn');
-            if (themeBtn && dict.theme_title) {
+            if (themeBtn && Object.prototype.hasOwnProperty.call(dict, 'theme_title')) {
                 themeBtn.title = dict.theme_title;
             }
+
+            if (Object.prototype.hasOwnProperty.call(dict, 'page_title')) {
+                document.title = dict.page_title;
+                const ogt = document.querySelector('meta[property="og:title"]');
+                if (ogt) ogt.content = dict.page_title;
+            }
+            if (Object.prototype.hasOwnProperty.call(dict, 'meta_description')) {
+                const md = document.querySelector('meta[name="description"]');
+                if (md) md.content = dict.meta_description;
+                const ogd = document.querySelector('meta[property="og:description"]');
+                if (ogd) ogd.content = dict.meta_description;
+            }
+            const ogl = document.querySelector('meta[property="og:locale"]');
+            if (ogl) ogl.content = currentLang === 'ru' ? 'ru_RU' : 'en_US';
         }
 
         function toggleLanguage() {

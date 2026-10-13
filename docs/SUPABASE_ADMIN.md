@@ -45,7 +45,7 @@ on conflict (key) do nothing;
 insert into public.cars (title, badge, photo_url, color_ru, color_en, sort_order, is_visible) values
   ('Toyota Land Cruiser 100 #1', 'Toyota TLC 100', 'img/lc100 n1.jfif', 'Черный', 'Black', 10, true),
   ('Toyota Land Cruiser 100 #2', 'Toyota TLC 100', 'img/lc100 n2.jfif', 'Серый', 'Gray', 20, true),
-  ('Lexus LX 470 #1', 'Lexus LX 470', 'img/lx470 n1.jfif', 'Белый', 'White', 30, true),
+  ('Lexus LX 470 #1', 'Lexus LX 470', 'img/lx470-n1.jfif', 'Белый', 'White', 30, true),
   ('Lexus LX 470 #2', 'Lexus LX 470', 'img/lx470 n2.jfif', 'Черный', 'Black', 40, true),
   ('Lexus GX 470', 'Lexus GX 470', 'img/gx460.jfif', 'Серый', 'Gray', 50, true);
 

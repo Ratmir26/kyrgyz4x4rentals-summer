@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Sitemap: https://kyrgyz4x4rentals.com/sitemap.xml
